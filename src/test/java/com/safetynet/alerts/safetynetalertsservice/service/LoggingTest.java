@@ -3,7 +3,10 @@ package com.safetynet.alerts.safetynetalertsservice.service;
 import com.safetynet.alerts.safetynetalertsservice.util.InMemoryAppender;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.config.Configuration;
+import org.apache.logging.log4j.core.config.LoggerConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -12,46 +15,49 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringBootTest
 class LoggingSpringBootTest {
 
-@Test
-void testLog4j2Levels() {
-    //logger creation
-    Logger logger = LogManager.getLogger(LoggingSpringBootTest.class);
+    @Test
+    void testLog4j2Levels() {
 
-    LoggerContext context = (LoggerContext) LogManager.getContext(false);
-    org.apache.logging.log4j.core.config.Configuration config = context.getConfiguration();
+        Logger logger = LogManager.getLogger(LoggingSpringBootTest.class);
 
-    InMemoryAppender appender = new InMemoryAppender("MEMORY");
-    appender.start();
+        LoggerContext context = (LoggerContext) LogManager.getContext(false);
+        Configuration config = context.getConfiguration();
 
-    config.addAppender(appender);
+        InMemoryAppender appender = new InMemoryAppender("MEMORY");
+        appender.start();
 
-    org.apache.logging.log4j.core.Logger coreLogger =
-            context.getLogger(LoggingSpringBootTest.class.getName());
+        config.addAppender(appender);
 
-    coreLogger.addAppender(appender);
-    coreLogger.setAdditive(false);
-    coreLogger.setLevel(org.apache.logging.log4j.Level.DEBUG);
-    context.updateLoggers();
-    ;
+        // IMPORTANT PART: modify LoggerConfig, not core Logger
+        LoggerConfig loggerConfig =
+                config.getLoggerConfig(LoggingSpringBootTest.class.getName());
 
+        // If the loggerConfig is inherited from parent, create a dedicated one
+        if (!loggerConfig.getName().equals(LoggingSpringBootTest.class.getName())) {
+            loggerConfig = new LoggerConfig(
+                    LoggingSpringBootTest.class.getName(),
+                    Level.DEBUG,
+                    false
+            );
+            config.addLogger(LoggingSpringBootTest.class.getName(), loggerConfig);
+        }
 
-    // emit logs
-    logger.info("error");
-    logger.debug("debug");
-    logger.error("info");
+        loggerConfig.setLevel(Level.DEBUG);
+        loggerConfig.addAppender(appender, Level.DEBUG, null);
 
+        context.updateLoggers();
 
-    assertTrue(appender.containsMessage("error"));
+        // Emit logs
+        logger.info("info");
+        logger.debug("debug");
+        logger.error("error");
 
-    assertTrue(appender.containsMessage("debug"));
+        assertTrue(appender.containsMessage("info"));
+        assertTrue(appender.containsMessage("debug"));
+        assertTrue(appender.containsMessage("error"));
 
-    assertTrue(appender.containsMessage("info"));
-
-
-
-
-
-    coreLogger.removeAppender(appender);
-    appender.stop();
-}
+        // Cleanup
+        loggerConfig.removeAppender("MEMORY");
+        appender.stop();
+    }
 }
