@@ -28,7 +28,6 @@ class LoggingSpringBootTest {
 
         config.addAppender(appender);
 
-        // IMPORTANT PART: modify LoggerConfig, not core Logger
         LoggerConfig loggerConfig =
                 config.getLoggerConfig(LoggingSpringBootTest.class.getName());
 
