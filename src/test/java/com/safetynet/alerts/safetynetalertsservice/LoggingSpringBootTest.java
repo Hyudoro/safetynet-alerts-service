@@ -1,4 +1,4 @@
-package com.safetynet.alerts.safetynetalertsservice.service;
+package com.safetynet.alerts.safetynetalertsservice;
 
 import com.safetynet.alerts.safetynetalertsservice.util.InMemoryAppender;
 import org.apache.logging.log4j.LogManager;
@@ -8,11 +8,10 @@ import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.config.LoggerConfig;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest
 class LoggingSpringBootTest {
 
     @Test
