@@ -1,0 +1,44 @@
+package com.safetynet.alerts.safetynetalertsservice.repository;
+
+import com.safetynet.alerts.safetynetalertsservice.model.DataWrapper;
+import com.safetynet.alerts.safetynetalertsservice.model.FireStation;
+import com.safetynet.alerts.safetynetalertsservice.model.MedicalRecord;
+import com.safetynet.alerts.safetynetalertsservice.model.Person;
+import org.springframework.stereotype.Repository;
+import tools.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+
+@Repository
+public class JsonDataRepository implements DataRepository{
+    private final List<Person> persons;
+    private final List<FireStation> fireStations;
+    private final List<MedicalRecord> medicalRecords;
+
+    public JsonDataRepository(ObjectMapper objectMapper) throws IOException {
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("data.json");
+        DataWrapper wrapper = objectMapper.readValue(inputStream, DataWrapper.class);
+
+        this.persons = List.copyOf(wrapper.persons());
+        this.fireStations = List.copyOf(wrapper.fireStations());
+        this.medicalRecords = List.copyOf(wrapper.medicalrecords());
+    }
+
+    @Override
+    public List<Person> findAllPersons() {
+        return persons;
+    }
+
+    @Override
+    public List<FireStation> findAllFirestations() {
+        return fireStations;
+    }
+
+    @Override
+    public List<MedicalRecord> findAllMedicalRecords() {
+        return medicalRecords;
+    }
+
+}
