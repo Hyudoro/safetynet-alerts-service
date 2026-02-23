@@ -1,5 +1,6 @@
 package com.safetynet.alerts.safetynetalertsservice.repository;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.safetynet.alerts.safetynetalertsservice.model.DataWrapper;
 import com.safetynet.alerts.safetynetalertsservice.model.FireStation;
 import com.safetynet.alerts.safetynetalertsservice.model.MedicalRecord;
@@ -11,19 +12,21 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+
 @Repository
+@JsonIgnoreProperties(ignoreUnknown = true) // That way, we are not bothered if the JSON has more properties.
 public class JsonDataRepository implements DataRepository{
     private final List<Person> persons;
     private final List<FireStation> fireStations;
     private final List<MedicalRecord> medicalRecords;
 
-    public JsonDataRepository(ObjectMapper objectMapper) throws IOException {
+    public JsonDataRepository(ObjectMapper objectMapper) throws IOException, NullPointerException {
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream("data.json");
         DataWrapper wrapper = objectMapper.readValue(inputStream, DataWrapper.class);
 
         this.persons = List.copyOf(wrapper.persons());
         this.fireStations = List.copyOf(wrapper.fireStations());
-        this.medicalRecords = List.copyOf(wrapper.medicalrecords());
+        this.medicalRecords = List.copyOf(wrapper. medicalrecords());
     }
 
     @Override
