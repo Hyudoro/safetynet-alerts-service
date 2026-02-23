@@ -11,18 +11,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/firestation")
 public class FireStationController {
+
     private FireStationServicePort service;
+
     private static final Logger logger = LogManager.getLogger(FireStationController.class);
+
     public FireStationController(FireStationServicePort service) {
         this.service = service;
     }
 
     @GetMapping
-    public FirestationResponseDTO getByStation(
-            @RequestParam String stationNumber) {
+    public FirestationResponseDTO getByStation(@RequestParam String stationNumber) {
+
         logger.info("Incoming request station={}", stationNumber);
-        FirestationResponseDTO response =
-                service.getResidentsByStation(stationNumber);
+        FirestationResponseDTO response = service.getResidentsByStation(stationNumber);
         logger.info("Response={}", response);
         return response;
     }
