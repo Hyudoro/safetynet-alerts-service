@@ -35,7 +35,7 @@ class FireStationServiceTest {
         MedicalRecord record = new MedicalRecord("John", "Boyd",
                 "03/06/1984", new String[]{}, new String[]{});
 
-        when(repository.findAllFirestations()).thenReturn(List.of(firestation));
+        when(repository.findAllFireStations()).thenReturn(List.of(firestation));
         when(repository.findAllPersons()).thenReturn(List.of(person));
         when(repository.findAllMedicalRecords()).thenReturn(List.of(record));
 
@@ -49,7 +49,7 @@ class FireStationServiceTest {
         assertEquals("John", response.residents().get(0).firstName(), "Resident name mismatch");
 
         // Verify interactions
-        verify(repository).findAllFirestations();
+        verify(repository).findAllFireStations();
         verify(repository).findAllPersons();
         verify(repository).findAllMedicalRecords();
     }
@@ -57,7 +57,7 @@ class FireStationServiceTest {
     @Test
     void shouldReturnEmptyResponseWhenStationNotFound() {
         // Arrange
-        when(repository.findAllFirestations()).thenReturn(List.of());
+        when(repository.findAllFireStations()).thenReturn(List.of());
 
         // Act
         FirestationResponseDTO response = service.getResidentsByStation("6");
@@ -68,7 +68,7 @@ class FireStationServiceTest {
         assertEquals(0, response.childCount(), "Expected 0 children");
 
         // Verify interactions
-        verify(repository).findAllFirestations();
+        verify(repository).findAllFireStations();
         verify(repository, never()).findAllPersons(); // shouldn't happen cause adress is empty
         verify(repository, never()).findAllMedicalRecords(); //
 
@@ -84,7 +84,7 @@ class FireStationServiceTest {
         MedicalRecord childRecord = new MedicalRecord("Roger", "Boyd",
                 "09/06/2017", new String[]{}, new String[]{});
 
-        when(repository.findAllFirestations()).thenReturn(List.of(firestation));
+        when(repository.findAllFireStations()).thenReturn(List.of(firestation));
         when(repository.findAllPersons()).thenReturn(List.of(child));
         when(repository.findAllMedicalRecords()).thenReturn(List.of(childRecord));
 
@@ -97,7 +97,7 @@ class FireStationServiceTest {
         assertEquals("Roger", response.residents().get(0).firstName(), "Resident name mismatch");
 
         // Verify interactions
-        verify(repository).findAllFirestations();
+        verify(repository).findAllFireStations();
         verify(repository).findAllPersons();
         verify(repository).findAllMedicalRecords();
     }

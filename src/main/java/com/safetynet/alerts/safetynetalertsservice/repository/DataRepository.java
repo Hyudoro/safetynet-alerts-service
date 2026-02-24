@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface DataRepository {
     List<Person> findAllPersons();
-    List<FireStation> findAllFirestations();
+    List<FireStation> findAllFireStations();
     List<MedicalRecord> findAllMedicalRecords();
 }
