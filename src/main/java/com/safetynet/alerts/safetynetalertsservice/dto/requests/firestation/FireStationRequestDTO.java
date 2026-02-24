@@ -1,4 +1,4 @@
-package com.safetynet.alerts.safetynetalertsservice.dto.request.firestation;
+package com.safetynet.alerts.safetynetalertsservice.dto.requests.firestation;
 
 public record FireStationRequestDTO(
         String address,

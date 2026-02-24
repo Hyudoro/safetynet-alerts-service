@@ -1,4 +1,4 @@
-package com.safetynet.alerts.safetynetalertsservice.dto.request.person;
+package com.safetynet.alerts.safetynetalertsservice.dto.requests.person;
 
 public record PersonRequestDTO(
         String firstName,

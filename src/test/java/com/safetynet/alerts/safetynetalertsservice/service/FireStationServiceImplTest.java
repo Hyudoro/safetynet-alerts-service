@@ -5,6 +5,7 @@ import com.safetynet.alerts.safetynetalertsservice.model.FireStation;
 import com.safetynet.alerts.safetynetalertsservice.model.MedicalRecord;
 import com.safetynet.alerts.safetynetalertsservice.model.Person;
 import com.safetynet.alerts.safetynetalertsservice.repository.DataRepository;
+import com.safetynet.alerts.safetynetalertsservice.service.firestation.FireStationServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,13 +18,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class FireStationServiceTest {
+class FireStationServiceImplTest {
 
     @Mock
     private DataRepository repository;
 
     @InjectMocks
-    private FireStationService service;
+    private FireStationServiceImpl service;
 
     @Test
     void shouldReturnResidentsAndCounts() {
@@ -46,7 +47,7 @@ class FireStationServiceTest {
         assertEquals(1, response.residents().size(), "Expected 1 resident");
         assertEquals(1, response.adultCount(), "Expected 1 adult");
         assertEquals(0, response.childCount(), "Expected 0 children");
-        assertEquals("John", response.residents().get(0).firstName(), "Resident name mismatch");
+        assertEquals("John", response.residents().getFirst().firstName(), "Resident name mismatch");
 
         // Verify interactions
         verify(repository).findAllFireStations();
@@ -94,7 +95,7 @@ class FireStationServiceTest {
         // Assert
         assertEquals(0, response.adultCount(), "Expected 0 adults");
         assertEquals(1, response.childCount(), "Expected 1 child");
-        assertEquals("Roger", response.residents().get(0).firstName(), "Resident name mismatch");
+        assertEquals("Roger", response.residents().getFirst().firstName(), "Resident name mismatch");
 
         // Verify interactions
         verify(repository).findAllFireStations();
