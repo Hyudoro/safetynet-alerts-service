@@ -1,10 +1,15 @@
 package com.safetynet.alerts.safetynetalertsservice.model;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public record DataWrapper(
-
         List<Person> persons,
+        @JsonProperty ("firestations")
         List<FireStation> fireStations,
-        List<MedicalRecord> medicalrecords
+        @JsonProperty ("medicalrecords")
+        List<MedicalRecord> medicalRecords
 
-) {}
+) {
+
+}

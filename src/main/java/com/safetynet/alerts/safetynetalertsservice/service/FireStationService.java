@@ -24,7 +24,7 @@ public class FireStationService implements FireStationServicePort{
     @Override
     public FirestationResponseDTO getResidentsByStation(String stationNumber) {
 
-        List<String> addresses = repositoy.findAllFirestations().stream()
+        List<String> addresses = repositoy.findAllFireStations().stream()
                 .filter(fs -> fs.getStation().equals(stationNumber))
                 .map(FireStation::getAddress)
                 .toList();

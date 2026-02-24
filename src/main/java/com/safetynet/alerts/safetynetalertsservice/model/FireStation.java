@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FireStation {
+public class  FireStation {
 
     private String address;
     private String station;

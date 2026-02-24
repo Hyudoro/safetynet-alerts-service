@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-
+//deserialization
 @Repository
 @JsonIgnoreProperties(ignoreUnknown = true) // That way, we are not bothered if the JSON has more properties.
 public class JsonDataRepository implements DataRepository{
@@ -23,10 +23,12 @@ public class JsonDataRepository implements DataRepository{
     public JsonDataRepository(ObjectMapper objectMapper) throws IOException, NullPointerException {
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream("data.json");
         DataWrapper wrapper = objectMapper.readValue(inputStream, DataWrapper.class);
-
+        if (inputStream == null){
+            throw new IllegalStateException("data.json not found");
+        }
         this.persons = List.copyOf(wrapper.persons());
         this.fireStations = List.copyOf(wrapper.fireStations());
-        this.medicalRecords = List.copyOf(wrapper. medicalrecords());
+        this.medicalRecords = List.copyOf(wrapper.medicalRecords());
     }
 
     @Override
@@ -35,7 +37,7 @@ public class JsonDataRepository implements DataRepository{
     }
 
     @Override
-    public List<FireStation> findAllFirestations() {
+    public List<FireStation> findAllFireStations() {
         return fireStations;
     }
 
