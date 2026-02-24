@@ -1,4 +1,4 @@
-package com.safetynet.alerts.safetynetalertsservice.dto.request.medicalrecord;
+package com.safetynet.alerts.safetynetalertsservice.dto.requests.medicalrecord;
 
 import java.util.List;
 

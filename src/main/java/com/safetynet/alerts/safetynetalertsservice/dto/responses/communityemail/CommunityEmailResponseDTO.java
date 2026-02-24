@@ -1,4 +1,4 @@
-package com.safetynet.alerts.safetynetalertsservice.dto.responses.communityemal;
+package com.safetynet.alerts.safetynetalertsservice.dto.responses.communityemail;
 
 import java.util.List;
 
