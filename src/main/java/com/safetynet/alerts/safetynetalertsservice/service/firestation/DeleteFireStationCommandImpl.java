@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 public class DeleteFireStationCommandImpl implements DeleteFireStationCommand {
 
     @Override
-    public void executeByAdress(String address) {
+    public void executeByAddress(String address) {
 
     }
 

@@ -19,17 +19,18 @@ public class AddFireStationCommandImpl implements AddFireStationCommand {
 
     @Override
     public void execute(FireStation fs) {
-        repo.update(oldData -> {
+        repo.update(oldData -> {boolean alreadyExists = oldData.fireStations().stream()
+                    .anyMatch(existing -> existing.address().equals(fs.address()) && existing.station().equals(fs.station()));
 
-            List<FireStation> updatedStations =
-                    new ArrayList<>(oldData.fireStations());
+            if (alreadyExists) {
+                throw new IllegalArgumentException("Fire station mapping already exists for address " + fs.address() + " and station " + fs.station());
+            }
+
+            List<FireStation> updatedStations = new ArrayList<>(oldData.fireStations());
 
             updatedStations.add(fs);
 
-            return new DataWrapper(
-                    oldData.persons(),
-                    List.copyOf(updatedStations),
-                    oldData.medicalRecords()
+            return new DataWrapper(oldData.persons(), List.copyOf(updatedStations), oldData.medicalRecords()
             );
         });
     }
