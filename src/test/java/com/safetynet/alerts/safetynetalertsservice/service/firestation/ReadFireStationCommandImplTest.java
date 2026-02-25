@@ -1,14 +1,13 @@
-package com.safetynet.alerts.safetynetalertsservice.service;
+package com.safetynet.alerts.safetynetalertsservice.service.firestation;
 
-import com.safetynet.alerts.safetynetalertsservice.dto.responses.firestation.FirestationResponseDTO;
+import com.safetynet.alerts.safetynetalertsservice.dto.responses.firestation.FireStationResponseDTO;
 import com.safetynet.alerts.safetynetalertsservice.model.FireStation;
 import com.safetynet.alerts.safetynetalertsservice.model.MedicalRecord;
 import com.safetynet.alerts.safetynetalertsservice.model.Person;
 import com.safetynet.alerts.safetynetalertsservice.repository.DataRepository;
-import com.safetynet.alerts.safetynetalertsservice.service.firestation.FireStationServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -18,13 +17,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class FireStationServiceImplTest {
+class ReadFireStationCommandImplTest {
 
-    @Mock
-    private DataRepository repository;
 
-    @InjectMocks
+    @Mock private AddFireStationCommand addCommand;
+    @Mock private UpdateFireStationCommand updateCommand;
+    @Mock private DeleteFireStationCommand deleteCommand;
+    @Mock private DataRepository repository;
+
     private FireStationServiceImpl service;
+
+    @BeforeEach
+    void setUp() {
+        ReadFireStationCommand readCommand = new ReadFireStationCommandImpl(repository);
+        service = new FireStationServiceImpl(readCommand, addCommand, updateCommand, deleteCommand);
+    }
 
     @Test
     void shouldReturnResidentsAndCounts() {
@@ -41,7 +48,7 @@ class FireStationServiceImplTest {
         when(repository.findAllMedicalRecords()).thenReturn(List.of(record));
 
         // Act
-        FirestationResponseDTO response = service.getResidentsByStation("3");
+        FireStationResponseDTO response = service.getResidentsByStation("3");
 
         // Assert
         assertEquals(1, response.residents().size(), "Expected 1 resident");
@@ -61,7 +68,7 @@ class FireStationServiceImplTest {
         when(repository.findAllFireStations()).thenReturn(List.of());
 
         // Act
-        FirestationResponseDTO response = service.getResidentsByStation("6");
+        FireStationResponseDTO response = service.getResidentsByStation("6");
 
         // Assert
         assertEquals(0, response.residents().size(), "Expected no residents");
@@ -70,8 +77,8 @@ class FireStationServiceImplTest {
 
         // Verify interactions
         verify(repository).findAllFireStations();
-        verify(repository, never()).findAllPersons(); // shouldn't happen cause adress is empty
-        verify(repository, never()).findAllMedicalRecords(); //
+        verify(repository, never()).findAllPersons();
+        verify(repository, never()).findAllMedicalRecords();
 
     }
 
@@ -90,7 +97,7 @@ class FireStationServiceImplTest {
         when(repository.findAllMedicalRecords()).thenReturn(List.of(childRecord));
 
         // Act
-        FirestationResponseDTO response = service.getResidentsByStation("3");
+        FireStationResponseDTO response = service.getResidentsByStation("3");
 
         // Assert
         assertEquals(0, response.adultCount(), "Expected 0 adults");

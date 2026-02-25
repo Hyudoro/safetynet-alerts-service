@@ -1,6 +1,6 @@
 package com.safetynet.alerts.safetynetalertsservice.service.firestation;
 
-import com.safetynet.alerts.safetynetalertsservice.dto.responses.firestation.FirestationResponseDTO;
+import com.safetynet.alerts.safetynetalertsservice.dto.responses.firestation.FireStationResponseDTO;
 import com.safetynet.alerts.safetynetalertsservice.dto.responses.firestation.ResidentDTO;
 import com.safetynet.alerts.safetynetalertsservice.model.FireStation;
 import com.safetynet.alerts.safetynetalertsservice.model.MedicalRecord;
@@ -21,14 +21,14 @@ public class ReadFireStationCommandImpl implements ReadFireStationCommand{
     }
 
     @Override
-    public FirestationResponseDTO getResidentsByStation(String stationNumber) {
+    public FireStationResponseDTO getResidentsByStation(String stationNumber) {
         List<String> addresses = repository.findAllFireStations().stream()
                 .filter(fs -> fs.station().equals(stationNumber))
                 .map(FireStation::address)
                 .toList();
 
         if (addresses.isEmpty()) {
-            return new FirestationResponseDTO(List.of(), 0, 0);
+            return new FireStationResponseDTO(List.of(), 0, 0);
         }
 
         List<Person> persons = repository.findAllPersons();
@@ -65,7 +65,7 @@ public class ReadFireStationCommandImpl implements ReadFireStationCommand{
             }
         }
 
-        return new FirestationResponseDTO(residentDTOs, adultCount, childCount);
+        return new FireStationResponseDTO(residentDTOs, adultCount, childCount);
     }
 
 

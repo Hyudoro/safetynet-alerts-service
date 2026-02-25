@@ -1,7 +1,7 @@
 package com.safetynet.alerts.safetynetalertsservice.service.firestation;
 
 
-import com.safetynet.alerts.safetynetalertsservice.dto.responses.firestation.FirestationResponseDTO;
+import com.safetynet.alerts.safetynetalertsservice.dto.responses.firestation.FireStationResponseDTO;
 //import com.safetynet.alerts.safetynetalertsservice.model.FireStation;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +26,7 @@ public class FireStationServiceImpl implements FireStationService {
     }
 
     @Override
-    public FirestationResponseDTO getResidentsByStation(String stationNumber) {
+    public FireStationResponseDTO getResidentsByStation(String stationNumber) {
         return readCommand.getResidentsByStation(stationNumber);
     }
 
