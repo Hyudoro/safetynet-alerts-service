@@ -1,36 +1,54 @@
 package com.safetynet.alerts.safetynetalertsservice.repository;
 
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.safetynet.alerts.safetynetalertsservice.model.DataWrapper;
 import com.safetynet.alerts.safetynetalertsservice.model.FireStation;
 import com.safetynet.alerts.safetynetalertsservice.model.MedicalRecord;
 import com.safetynet.alerts.safetynetalertsservice.model.Person;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.function.UnaryOperator;
-
 @Repository
 public class JsonDataRepository implements DataRepository {
             //making sure every threads see the latest version of currentData.
     private volatile DataWrapper currentData;
     private final ObjectMapper objectMapper;
-    private final Path dataPath = Paths.get("src/main/resources/data.json");
+    private final Path dataPath;
 
-    public JsonDataRepository(ObjectMapper objectMapper) throws IOException {
+    public JsonDataRepository(ObjectMapper objectMapper, @Value("${data.file.path}") String filePath) throws IOException {
         this.objectMapper = objectMapper;
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("data.json");
-        if (inputStream == null) {
-            throw new IllegalStateException("data.json not found");
+        this.dataPath = Paths.get(filePath);
+        if (Files.exists(dataPath)) {
+            // if the external log file already exists we use it directly
+            try(InputStream iS = Files.newInputStream(dataPath)){
+                this.currentData = load(iS);
+            }
+        } else {
+            // Bootstrap from classpath
+            try (InputStream iS = getClass().getClassLoader().getResourceAsStream("data.json")){
+                if(iS == null){
+                    throw new IOException("Seed data.json not found in classpath");
+                }
+                this.currentData = load(iS);
+                // Create directories if needed
+                Files.createDirectories(dataPath.getParent());
+                // Persist initial copy
+                persist(this.currentData);
+            }
         }
-        DataWrapper loaded = objectMapper.readValue(inputStream, DataWrapper.class);
+    }
+    private DataWrapper load(InputStream is) throws IOException {
+        DataWrapper loaded = objectMapper.readValue(is, DataWrapper.class);
 
-        this.currentData = new DataWrapper(
+        return new DataWrapper(
                 List.copyOf(loaded.persons()),
                 List.copyOf(loaded.fireStations()),
                 List.copyOf(loaded.medicalRecords())
@@ -63,9 +81,7 @@ public class JsonDataRepository implements DataRepository {
 
     private void persist(DataWrapper data) {
         try {
-            objectMapper
-                    .writerWithDefaultPrettyPrinter()
-                    .writeValue(dataPath.toFile(), data);
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(dataPath.toFile(), data);
         } catch (IOException e) {
             throw new RuntimeException("Failed to persist data", e);
         }
