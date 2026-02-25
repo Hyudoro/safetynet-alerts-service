@@ -1,7 +1,7 @@
 package com.safetynet.alerts.safetynetalertsservice.service.firestation;
 
-import com.safetynet.alerts.safetynetalertsservice.dto.responses.firestation.FirestationResponseDTO;
+import com.safetynet.alerts.safetynetalertsservice.dto.responses.firestation.FireStationResponseDTO;
 
 public interface ReadFireStationCommand {
-    FirestationResponseDTO getResidentsByStation(String stationNumber);
+    FireStationResponseDTO getResidentsByStation(String stationNumber);
 }

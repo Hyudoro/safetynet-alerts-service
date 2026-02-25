@@ -53,7 +53,7 @@
     </Appenders>
 
     <Loggers>
-        <Root level="debug">
+        <Root level="info">
             <AppenderRef ref="InfoFile"/>
             <AppenderRef ref="ErrorFile"/>
             <AppenderRef ref="DebugFile"/>
