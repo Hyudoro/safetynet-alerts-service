@@ -7,6 +7,7 @@ import com.safetynet.alerts.safetynetalertsservice.model.MedicalRecord;
 import com.safetynet.alerts.safetynetalertsservice.model.Person;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
@@ -18,8 +19,8 @@ import java.util.List;
 import java.util.function.UnaryOperator;
 @Repository
 public class JsonDataRepository implements DataRepository {
-            //making sure every threads see the latest version of currentData.
-    private volatile DataWrapper currentData;
+    //making sure every threads see the latest version of currentData.
+    protected volatile DataWrapper currentData;
     private final ObjectMapper objectMapper;
     private final Path dataPath;
 
@@ -28,13 +29,13 @@ public class JsonDataRepository implements DataRepository {
         this.dataPath = Paths.get(filePath);
         if (Files.exists(dataPath)) {
             // if the external log file already exists we use it directly
-            try(InputStream iS = Files.newInputStream(dataPath)){
+            try (InputStream iS = Files.newInputStream(dataPath)) {
                 this.currentData = load(iS);
             }
         } else {
             // Bootstrap from classpath
-            try (InputStream iS = getClass().getClassLoader().getResourceAsStream("data.json")){
-                if(iS == null){
+            try (InputStream iS = getClass().getClassLoader().getResourceAsStream("data.json")) {
+                if (iS == null) {
                     throw new IOException("Seed data.json not found in classpath");
                 }
                 this.currentData = load(iS);
@@ -45,7 +46,8 @@ public class JsonDataRepository implements DataRepository {
             }
         }
     }
-    private DataWrapper load(InputStream is) throws IOException {
+
+    protected DataWrapper load(InputStream is) throws IOException {
         DataWrapper loaded = objectMapper.readValue(is, DataWrapper.class);
 
         return new DataWrapper(
@@ -77,15 +79,11 @@ public class JsonDataRepository implements DataRepository {
         persist(newData);
     }
 
-    private void persist(DataWrapper data) {
+    protected void persist(DataWrapper data) {
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(dataPath.toFile(), data);
         } catch (IOException e) {
             throw new RuntimeException("Failed to persist data", e);
         }
     }
-
-
-
-
 }
