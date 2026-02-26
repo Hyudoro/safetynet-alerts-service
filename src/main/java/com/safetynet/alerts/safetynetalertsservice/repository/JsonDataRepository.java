@@ -72,9 +72,7 @@ public class JsonDataRepository implements DataRepository {
 
     public synchronized void update(UnaryOperator<DataWrapper> updateWrapper) {
         DataWrapper oldData = currentData;
-
         DataWrapper newData = updateWrapper.apply(oldData);
-
         currentData = newData;
         persist(newData);
     }

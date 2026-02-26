@@ -33,7 +33,7 @@ public class FireStationController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void addFireStation(@Valid @RequestBody FireStationRequestDTO request) {
+    public void addFireStation(@RequestBody @Valid FireStationRequestDTO request) {
         logger.info("Adding fireStation mapping address={} station={}", request.address(), request.station());
         FireStation fireStation  = new FireStation(request.address(), request.station());
         service.addFireStation(fireStation);
