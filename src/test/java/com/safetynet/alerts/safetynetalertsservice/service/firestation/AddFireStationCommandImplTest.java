@@ -33,7 +33,7 @@ public class AddFireStationCommandImplTest {
             service = new FireStationServiceImpl(readFireStationCommand,addCommand,updateFireStationCommand,deleteFireStationCommand);
     }
     @Test
-    void addFireStationShouldCallRepositoryWithNewStationTest() {
+    void shouldCallRepositoryWithNewStationTest() {
         FireStation fS = new FireStation("126 Soslita St", "8");
 
         doAnswer(invocation -> {
@@ -62,7 +62,7 @@ public class AddFireStationCommandImplTest {
     }
 
     @Test
-    void addFireStationShouldThrowsRunTimeExceptionIfFireStationAlreadyExistsTest() {
+    void shouldThrowsRunTimeExceptionIfFireStationAlreadyExistsTest() {
         FireStation fS1 = new FireStation("130 baracouda St", "5");
         FireStation fS2 = new FireStation("130 baracouda St", "5");
         doAnswer(invocation -> {
@@ -71,8 +71,7 @@ public class AddFireStationCommandImplTest {
             List<FireStation> lFS = new ArrayList<>(oldData.fireStations());
             lFS.add(fS1);
             DataWrapper currentData = new DataWrapper(List.of(),List.copyOf(lFS), List.of());
-            DataWrapper newData = lambda.apply(currentData);
-            return newData;
+            return lambda.apply(currentData);
         }).when(dataRepository).update(any());
 
         // The service should now throw when adding fS2 (duplicate)
