@@ -1,9 +1,9 @@
-package com.safetynet.alerts.safetynetalertsservice.dto.requests.firestation;
+package com.safetynet.alerts.safetynetalertsservice.dto.requests.firestation.add;
 
 
 import jakarta.validation.constraints.NotBlank;
 
-public record FireStationRequestDTO(
+public record FireStationAddingDTO(
        @NotBlank String address,
        @NotBlank String station
 ) {

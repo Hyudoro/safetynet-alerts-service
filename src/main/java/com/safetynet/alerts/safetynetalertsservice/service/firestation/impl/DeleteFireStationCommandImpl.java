@@ -1,5 +1,6 @@
-package com.safetynet.alerts.safetynetalertsservice.service.firestation;
+package com.safetynet.alerts.safetynetalertsservice.service.firestation.impl;
 
+import com.safetynet.alerts.safetynetalertsservice.service.firestation.interfaces.DeleteFireStationCommand;
 import org.springframework.stereotype.Service;
 
 @Service

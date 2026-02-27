@@ -1,9 +1,10 @@
-package com.safetynet.alerts.safetynetalertsservice.service.firestation;
+package com.safetynet.alerts.safetynetalertsservice.service.firestation.impl;
 
 
 import com.safetynet.alerts.safetynetalertsservice.dto.responses.firestation.FireStationResponseDTO;
 //import com.safetynet.alerts.safetynetalertsservice.model.FireStation;
 import com.safetynet.alerts.safetynetalertsservice.model.FireStation;
+import com.safetynet.alerts.safetynetalertsservice.service.firestation.interfaces.*;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -37,8 +38,8 @@ public class FireStationServiceImpl implements FireStationService {
     }
 
     @Override
-    public void updateFireStation(String address, String stationNumber) {
-        updateCommand.execute(address, stationNumber);
+    public void updateFireStation(FireStation oldFireStation ,Integer stationNumber) {
+        updateCommand.execute(oldFireStation, stationNumber);
     }
 
     @Override
