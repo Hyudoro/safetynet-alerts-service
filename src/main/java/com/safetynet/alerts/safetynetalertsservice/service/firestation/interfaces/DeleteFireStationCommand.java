@@ -1,4 +1,4 @@
-package com.safetynet.alerts.safetynetalertsservice.service.firestation;
+package com.safetynet.alerts.safetynetalertsservice.service.firestation.interfaces;
 
 public interface DeleteFireStationCommand {
     void executeByAddress(String address);

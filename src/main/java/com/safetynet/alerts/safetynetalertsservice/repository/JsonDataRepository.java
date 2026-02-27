@@ -6,8 +6,8 @@ import com.safetynet.alerts.safetynetalertsservice.model.FireStation;
 import com.safetynet.alerts.safetynetalertsservice.model.MedicalRecord;
 import com.safetynet.alerts.safetynetalertsservice.model.Person;
 
+import com.safetynet.alerts.safetynetalertsservice.util.Deduplicator;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
@@ -50,10 +50,10 @@ public class JsonDataRepository implements DataRepository {
     protected DataWrapper load(InputStream is) throws IOException {
         DataWrapper loaded = objectMapper.readValue(is, DataWrapper.class);
 
-        return new DataWrapper(
-                List.copyOf(loaded.persons()),
-                List.copyOf(loaded.fireStations()),
-                List.copyOf(loaded.medicalRecords())
+        return new DataWrapper( //If the seed JSON has duplicates, it sends a warning
+                Deduplicator.deduplicate(loaded.persons(), "persons"),
+                Deduplicator.deduplicate(loaded.fireStations(), "fireStations"),
+                Deduplicator.deduplicate(loaded.medicalRecords(), "medicalRecords")
         );
     }
 

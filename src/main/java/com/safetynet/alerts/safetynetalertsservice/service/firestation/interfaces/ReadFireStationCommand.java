@@ -1,4 +1,4 @@
-package com.safetynet.alerts.safetynetalertsservice.service.firestation;
+package com.safetynet.alerts.safetynetalertsservice.service.firestation.interfaces;
 
 import com.safetynet.alerts.safetynetalertsservice.dto.responses.firestation.FireStationResponseDTO;
 

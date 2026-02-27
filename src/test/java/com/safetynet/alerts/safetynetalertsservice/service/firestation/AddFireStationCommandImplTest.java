@@ -3,6 +3,12 @@ import com.safetynet.alerts.safetynetalertsservice.model.DataWrapper;
 import com.safetynet.alerts.safetynetalertsservice.model.FireStation;
 import com.safetynet.alerts.safetynetalertsservice.model.exception.DuplicateFireStationMappingException;
 import com.safetynet.alerts.safetynetalertsservice.repository.DataRepository;
+import com.safetynet.alerts.safetynetalertsservice.service.firestation.impl.AddFireStationCommandImpl;
+import com.safetynet.alerts.safetynetalertsservice.service.firestation.impl.FireStationServiceImpl;
+import com.safetynet.alerts.safetynetalertsservice.service.firestation.interfaces.AddFireStationCommand;
+import com.safetynet.alerts.safetynetalertsservice.service.firestation.interfaces.DeleteFireStationCommand;
+import com.safetynet.alerts.safetynetalertsservice.service.firestation.interfaces.ReadFireStationCommand;
+import com.safetynet.alerts.safetynetalertsservice.service.firestation.interfaces.UpdateFireStationCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,9 +26,12 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class AddFireStationCommandImplTest {
-    @Mock ReadFireStationCommand readFireStationCommand;
-    @Mock DeleteFireStationCommand deleteFireStationCommand;
-    @Mock UpdateFireStationCommand updateFireStationCommand;
+    @Mock
+    ReadFireStationCommand readFireStationCommand;
+    @Mock
+    DeleteFireStationCommand deleteFireStationCommand;
+    @Mock
+    UpdateFireStationCommand updateFireStationCommand;
     @Mock DataRepository dataRepository;
 
     private FireStationServiceImpl service;

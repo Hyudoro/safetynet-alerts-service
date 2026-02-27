@@ -1,8 +1,9 @@
 package com.safetynet.alerts.safetynetalertsservice.controller;
-import com.safetynet.alerts.safetynetalertsservice.dto.requests.firestation.FireStationRequestDTO;
+import com.safetynet.alerts.safetynetalertsservice.dto.requests.firestation.add.FireStationAddingDTO;
+import com.safetynet.alerts.safetynetalertsservice.dto.requests.firestation.update.FireStationUpdateDTO;
 import com.safetynet.alerts.safetynetalertsservice.dto.responses.firestation.FireStationResponseDTO;
 import com.safetynet.alerts.safetynetalertsservice.model.FireStation;
-import com.safetynet.alerts.safetynetalertsservice.service.firestation.FireStationService;
+import com.safetynet.alerts.safetynetalertsservice.service.firestation.interfaces.FireStationService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import org.apache.logging.log4j.LogManager;
@@ -18,10 +19,10 @@ public class FireStationController {
 
     private static final Logger logger = LogManager.getLogger(FireStationController.class);
 
-    public FireStationController(FireStationService service)
-    {
+    public FireStationController(FireStationService service) {
         this.service = service;
     }
+
     @GetMapping
     public FireStationResponseDTO getByStation(@RequestParam @NotBlank String stationNumber) {
 
@@ -33,12 +34,21 @@ public class FireStationController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void addFireStation(@RequestBody @Valid FireStationRequestDTO request) {
+    public void addFireStation(@RequestBody @Valid FireStationAddingDTO request) {
         logger.info("Adding fireStation mapping address={} station={}", request.address(), request.station());
-        FireStation fireStation  = new FireStation(request.address(), request.station());
+        FireStation fireStation = new FireStation(request.address(), request.station());
         service.addFireStation(fireStation);
     }
 
+    @PatchMapping //Because (address,station) is the identifier of FireStation.
+    public void updateStation(@RequestBody @Valid FireStationUpdateDTO request) {
+        logger.info("Updating fireStation mapping address={} oldStation={} newStation={}",
+                request.address(), request.oldStationNumber(), request.newStationNumber());
+
+        FireStation oldFireStation = new FireStation(request.address(), request.oldStationNumber());
+        Integer stationNumber = Integer.valueOf(request.newStationNumber());
+        service.updateFireStation(oldFireStation, stationNumber);
+    }
 
 
 }

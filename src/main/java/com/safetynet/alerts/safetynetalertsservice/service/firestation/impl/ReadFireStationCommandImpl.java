@@ -1,4 +1,4 @@
-package com.safetynet.alerts.safetynetalertsservice.service.firestation;
+package com.safetynet.alerts.safetynetalertsservice.service.firestation.impl;
 
 import com.safetynet.alerts.safetynetalertsservice.dto.responses.firestation.FireStationResponseDTO;
 import com.safetynet.alerts.safetynetalertsservice.dto.responses.firestation.ResidentDTO;
@@ -6,6 +6,7 @@ import com.safetynet.alerts.safetynetalertsservice.model.FireStation;
 import com.safetynet.alerts.safetynetalertsservice.model.MedicalRecord;
 import com.safetynet.alerts.safetynetalertsservice.model.Person;
 import com.safetynet.alerts.safetynetalertsservice.repository.DataRepository;
+import com.safetynet.alerts.safetynetalertsservice.service.firestation.interfaces.ReadFireStationCommand;
 import com.safetynet.alerts.safetynetalertsservice.util.AgeCalculator;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ReadFireStationCommandImpl implements ReadFireStationCommand{
+public class ReadFireStationCommandImpl implements ReadFireStationCommand {
     private final DataRepository repository;
 
     public ReadFireStationCommandImpl(DataRepository repository) {
@@ -67,9 +68,4 @@ public class ReadFireStationCommandImpl implements ReadFireStationCommand{
 
         return new FireStationResponseDTO(residentDTOs, adultCount, childCount);
     }
-
-
-    //    public List<FireStation> findAllFireStations() {
-//        return repository.findAllFireStations();
-//    }
 }
