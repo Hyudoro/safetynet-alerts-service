@@ -7,6 +7,7 @@ public interface FireStationService {
     FireStationResponseDTO getResidentsByStation(String stationNumber);
     void addFireStation(FireStation fs);
     void updateFireStation(FireStation address, Integer stationNumber);
-    void deleteFireStationByAddress(String address);
-    void deleteFireStationByStation(String stationNumber);
+    void deleteMappingsByAddress(String address);
+    void deleteMappingsByStation(String stationNumber);
+    void deleteMapping(FireStation fs);
 }

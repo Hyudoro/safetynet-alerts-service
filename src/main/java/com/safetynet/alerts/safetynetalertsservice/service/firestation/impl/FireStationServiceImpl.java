@@ -43,14 +43,19 @@ public class FireStationServiceImpl implements FireStationService {
     }
 
     @Override
-    public void deleteFireStationByAddress(String address) {
+    public void deleteMappingsByAddress(String address) {
         deleteCommand.executeByAddress(address);
     }
 
     @Override
-    public void deleteFireStationByStation(String stationNumber) {
+    public void deleteMappingsByStation(String stationNumber) {
         deleteCommand.executeByStation(stationNumber);
+
     }
 
+    @Override
+    public void deleteMapping(FireStation fs) {
+        deleteCommand.executeByFireStation(fs);
+    }
 
 }
