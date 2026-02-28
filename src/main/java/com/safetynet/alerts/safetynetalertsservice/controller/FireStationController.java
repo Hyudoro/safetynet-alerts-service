@@ -1,5 +1,7 @@
 package com.safetynet.alerts.safetynetalertsservice.controller;
-import com.safetynet.alerts.safetynetalertsservice.dto.requests.firestation.add.FireStationAddingDTO;
+import com.safetynet.alerts.safetynetalertsservice.dto.requests.firestation.add.FireStationAddDTO;
+import com.safetynet.alerts.safetynetalertsservice.dto.requests.firestation.delete.FireStationDeleteByAddressDTO;
+import com.safetynet.alerts.safetynetalertsservice.dto.requests.firestation.delete.FireStationDeleteByStationDTO;
 import com.safetynet.alerts.safetynetalertsservice.dto.requests.firestation.update.FireStationUpdateDTO;
 import com.safetynet.alerts.safetynetalertsservice.dto.responses.firestation.FireStationResponseDTO;
 import com.safetynet.alerts.safetynetalertsservice.model.FireStation;
@@ -34,7 +36,7 @@ public class FireStationController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void addFireStation(@RequestBody @Valid FireStationAddingDTO request) {
+    public void addFireStation(@RequestBody @Valid FireStationAddDTO request) {
         logger.info("Adding fireStation mapping address={} station={}", request.address(), request.station());
         FireStation fireStation = new FireStation(request.address(), request.station());
         service.addFireStation(fireStation);
@@ -49,6 +51,26 @@ public class FireStationController {
         Integer stationNumber = Integer.valueOf(request.newStationNumber());
         service.updateFireStation(oldFireStation, stationNumber);
     }
+
+    @DeleteMapping(params = "address")
+    public void deleteFireStationsByAddress(@RequestParam @NotBlank String address){
+        logger.info("Deleting FireStation(s) covering address={}",address);
+        service.deleteMappingsByAddress(address);
+    }
+
+    @DeleteMapping(params = "stationNumber")
+    public void deleteFireStationByStation(@RequestParam @NotBlank String stationNumber){
+        logger.info("Deleting FireStation(s) with number ={}",stationNumber);
+        service.deleteMappingsByStation(stationNumber);
+    }
+
+    @DeleteMapping(params = {"address", "stationNumber"})
+    public void deleteFireStation(@RequestParam @NotBlank String address, @RequestParam @NotBlank String stationNumber){
+        logger.info("Deleting FireStation mapping address={} station={} ",address,stationNumber);
+        FireStation fireStation = new FireStation(address, stationNumber);
+        service.deleteMapping(fireStation);
+    }
+
 
 
 }
