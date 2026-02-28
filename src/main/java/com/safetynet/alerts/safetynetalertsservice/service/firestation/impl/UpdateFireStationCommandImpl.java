@@ -24,15 +24,13 @@ public class UpdateFireStationCommandImpl implements UpdateFireStationCommand {
             // Keep order with LinkedHashSet
             Set<FireStation> fireStations = new LinkedHashSet<>(oldData.fireStations());
 
-            if (!fireStations.remove(oldFireStation)) {
-                throw new OldFireStationNotFoundException(
-                        oldFireStation.address(), oldFireStation.station()
+            if (fireStations.contains(oldFireStation)) {
+                fireStations.remove(oldFireStation); // remove old mapping
+                fireStations.add(new FireStation(oldFireStation.address(), (newStationNumber).toString()));
+            } else {
+                throw new OldFireStationNotFoundException(oldFireStation.address(), oldFireStation.station()
                 );
             }
-
-            // Add updated mapping
-            fireStations.add(new FireStation(oldFireStation.address(), (newStationNumber).toString()));
-
             return new DataWrapper(oldData.persons(), List.copyOf(fireStations), oldData.medicalRecords()
             );
         });
