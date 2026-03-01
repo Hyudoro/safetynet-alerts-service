@@ -50,7 +50,7 @@ public class ReadFireStationCommandImpl implements ReadFireStationCommand {
                                 "Medical record not found for " + person.firstName() + " " + person.lastName()
                         ));
 
-                int age = AgeCalculator.calculate(record.birthdate());
+                int age = AgeCalculator.calculate(record.birthDate());
 
                 if (age >= 18) adultCount++;
                 else childCount++;

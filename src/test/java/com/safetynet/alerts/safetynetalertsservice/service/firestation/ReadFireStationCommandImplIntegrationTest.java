@@ -24,7 +24,7 @@ public class ReadFireStationCommandImplIntegrationTest {
     }
 
     @Test
-    void shouldReturnEmptyListAndNullForCountsIfFireStationIsntFoundedIntegrationTest(){
+    void shouldReturnEmptyListAndNullForCountsIfFireStationIsnTFoundedIntegrationTest(){
 
         FireStationResponseDTO response = service.getResidentsByStation("99");
         assertEquals(0, response.adultCount(), "Expected 0 adults");

@@ -5,7 +5,6 @@ import com.safetynet.alerts.safetynetalertsservice.model.FireStation;
 import com.safetynet.alerts.safetynetalertsservice.model.exception.MappingWithAddressNotFoundException;
 import com.safetynet.alerts.safetynetalertsservice.model.exception.MappingWithStationAndAddressNotFoundException;
 import com.safetynet.alerts.safetynetalertsservice.model.exception.MappingWithStationNotFoundException;
-import com.safetynet.alerts.safetynetalertsservice.model.exception.OldFireStationNotFoundException;
 import com.safetynet.alerts.safetynetalertsservice.repository.DataRepository;
 import com.safetynet.alerts.safetynetalertsservice.service.firestation.interfaces.DeleteFireStationCommand;
 import org.springframework.stereotype.Service;
