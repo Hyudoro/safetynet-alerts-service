@@ -17,6 +17,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -47,7 +49,7 @@ class ReadFireStationCommandImplTest {
                 "1509 Culver St", "Culver", "97451",
                 "841-874-6512", "john@email.com");
         MedicalRecord record = new MedicalRecord("John", "Boyd",
-                "03/06/1984", new String[]{}, new String[]{});
+                "03/06/1984", new ArrayList<>(),new ArrayList<>());
 
         when(repository.findAllFireStations()).thenReturn(List.of(firestation));
         when(repository.findAllPersons()).thenReturn(List.of(person));
@@ -96,7 +98,7 @@ class ReadFireStationCommandImplTest {
                 "1509 Culver St", "Culver", "97451",
                 "841-874-6512", "roger@email.com");
         MedicalRecord childRecord = new MedicalRecord("Roger", "Boyd",
-                "09/06/2017", new String[]{}, new String[]{});
+                "09/06/2017", new ArrayList<>(),new ArrayList<>());
 
         when(repository.findAllFireStations()).thenReturn(List.of(firestation));
         when(repository.findAllPersons()).thenReturn(List.of(child));

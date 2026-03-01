@@ -40,7 +40,7 @@ class UpdateFireStationCommandImplIntegrationTest {
     }
 
     @Test
-    void shouldUpdateFireStationStationNumber(){
+    void shouldUpdateFireStationStationNumberIntegrationTest(){
         service.updateFireStation(new FireStation("29 15th St", "2"),99);
         assertTrue(jsonDataRepository.findAllFireStations().stream().anyMatch(fs ->
                 fs.address().equals("29 15th St") && fs.station().equals("99")));
@@ -49,7 +49,7 @@ class UpdateFireStationCommandImplIntegrationTest {
     //(address, station) is the identifier itself of FireStation, therefore,
     // veryfing if one only doesn't respect the condition is sufficient.
     @Test
-    void shouldThrowsRunTimeException(){
+    void shouldThrowsRunTimeExceptionIntegrationTest(){
         assertThrows(OldFireStationNotFoundException.class,  () -> service.updateFireStation(new FireStation("29 15th st", "999"),99));
     }
 

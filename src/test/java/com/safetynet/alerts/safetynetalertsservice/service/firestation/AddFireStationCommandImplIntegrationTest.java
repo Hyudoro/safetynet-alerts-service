@@ -46,7 +46,7 @@ class AddFireStationCommandImplIntegrationTest {
     }
 
     @Test
-    void shouldAddTheFireStationToTheRepository() {
+    void shouldAddTheFireStationToTheRepositoryIntegrationTest() {
         service.addFireStation(new FireStation("Marting st","5"));
         assertTrue(
                 jsonDataRepository.findAllFireStations().stream()
@@ -55,7 +55,7 @@ class AddFireStationCommandImplIntegrationTest {
     }
 
     @Test
-    void shouldThrowDuplicateFireStationException() {
+    void shouldThrowDuplicateFireStationExceptionIntegrationTest() {
         service.addFireStation(new FireStation("Marting st","5"));
         assertThrows(DuplicateFireStationMappingException.class, () -> service.addFireStation(new FireStation("Marting st","5")));
     }

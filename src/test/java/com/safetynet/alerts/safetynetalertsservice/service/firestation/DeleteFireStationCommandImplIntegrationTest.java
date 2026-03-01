@@ -59,7 +59,7 @@ public class DeleteFireStationCommandImplIntegrationTest {
     }
 
     @Test
-    void shouldThrowsRunTimeExceptionIfAddressNotFoundTest() {
+    void shouldThrowsRunTimeExceptionIfAddressNotFoundIntegrationTest() {
         assertThrows(MappingWithAddressNotFoundException.class, () -> service.deleteMappingsByAddress("scp 200"));
     }
 
@@ -78,7 +78,7 @@ public class DeleteFireStationCommandImplIntegrationTest {
     }
 
     @Test
-    void shouldThrowsRunTimeExceptionIfStationNotFoundTest() {
+    void shouldThrowsRunTimeExceptionIfStationNotFoundIntegrationTest() {
         assertThrows(MappingWithStationNotFoundException.class, () -> service.deleteMappingsByStation("200"));
     }
 
