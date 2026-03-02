@@ -31,8 +31,8 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
     }
 
     @Override
-    public void deleteMedicalRecord(MedicalRecord mR) {
-         deleteCommand.execute(mR);
+    public void deleteMedicalRecord(String lastName, String firstName) {
+         deleteCommand.execute(lastName,firstName);
     }
 
     @Override
