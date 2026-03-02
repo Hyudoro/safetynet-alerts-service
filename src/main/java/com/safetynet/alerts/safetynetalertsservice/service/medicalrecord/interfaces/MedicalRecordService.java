@@ -7,8 +7,6 @@ import java.util.List;
 public interface MedicalRecordService {
     void addMedicalRecord(MedicalRecord mR);
     void deleteMedicalRecord(String lastName, String firstName);
-    void updateRemovingAllergyMedicalRecord(String name, String firstName, List<String> AllergyDel);
-    void updateRemovingMedicatinMedicalRecord(String name, String firstName, List<String> medicationDel);
-    void updateAddingAllergyMedicalRecord(String name, String firstName, List<String> allergyAdd);
-    void updateAddingMedicatinMedicalRecord(String name, String firstName, List<String> medicationAdd);
+    void updateMedicationMedicalRecord(String lastName, String firstName, List<String> medicationDel);
+    void updateAllergyMedicalRecord(String lastName, String firstName, List<String> allergyAdd);
 }

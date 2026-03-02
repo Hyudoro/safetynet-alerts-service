@@ -52,14 +52,4 @@ public class DeleteMedicalRecordCommandImplIntegrationTest {
                 service.deleteMedicalRecord("rust","isLife"));
     }
 
-
-
-
-
-
-
-
-
-
-
 }
