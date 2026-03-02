@@ -27,6 +27,12 @@ public class MedicalRecordsController {
         service.addMedicalRecord(medicalRecord);
     }
 
+    @DeleteMapping
+    public void DeleteMedicalRecord(@RequestParam String firstName, String lastName){
+        logger.info("Deleting Medical Record mapping lastName ={} firstName = {}", lastName, firstName );
+        service.deleteMedicalRecord(lastName, firstName);
+    }
+
 
 
 
