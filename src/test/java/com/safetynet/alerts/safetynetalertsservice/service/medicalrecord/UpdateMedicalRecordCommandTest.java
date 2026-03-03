@@ -36,8 +36,8 @@ public class UpdateMedicalRecordCommandTest {
 
     @BeforeEach
     public void setUp(){
-        UpdateMedicalRecordCommand upDateCommand = new UpdateMedicalRecordCommandImpl(dataRepository);
-        service = new MedicalRecordServiceImpl(addMedicalRecordCommand, deleteMedicalRecordCommand, upDateCommand);
+        UpdateMedicalRecordCommand updateMedicalRecordCommand = new UpdateMedicalRecordCommandImpl(dataRepository);
+        service = new MedicalRecordServiceImpl(addMedicalRecordCommand, deleteMedicalRecordCommand, updateMedicalRecordCommand);
     }
 
     @Test

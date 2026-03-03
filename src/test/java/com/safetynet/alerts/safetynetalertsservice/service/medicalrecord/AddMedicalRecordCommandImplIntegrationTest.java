@@ -21,7 +21,7 @@ import java.util.List;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class AddMedicalRecordCommandIntegrationTest {
+public class AddMedicalRecordCommandImplIntegrationTest {
     @TempDir static Path temp;
     @Autowired
     MedicalRecordServiceImpl service;

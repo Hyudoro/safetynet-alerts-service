@@ -38,8 +38,8 @@ public class AddFireStationCommandImplTest {
 
     @BeforeEach
     void setUp() {
-        AddFireStationCommand addCommand = new AddFireStationCommandImpl(dataRepository);
-            service = new FireStationServiceImpl(readFireStationCommand,addCommand,updateFireStationCommand,deleteFireStationCommand);
+        AddFireStationCommand addFireStationCommand = new AddFireStationCommandImpl(dataRepository);
+            service = new FireStationServiceImpl(readFireStationCommand,addFireStationCommand,updateFireStationCommand,deleteFireStationCommand);
     }
     @Test
     void shouldCallRepositoryWithNewStationTest() {
