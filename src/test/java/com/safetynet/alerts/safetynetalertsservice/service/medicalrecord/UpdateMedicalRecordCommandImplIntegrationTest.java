@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class UpdateMedicalRecordCommandIntegrationTest {
+public class UpdateMedicalRecordCommandImplIntegrationTest {
     @TempDir static Path temp;
     @Autowired MedicalRecordService service;
     @Autowired TestableJsonDataRepository repository;

@@ -37,8 +37,8 @@ class ReadFireStationCommandImplTest {
 
     @BeforeEach
     void setUp() {
-        ReadFireStationCommand readCommand = new ReadFireStationCommandImpl(repository);
-        service = new FireStationServiceImpl(readCommand, addCommand, updateCommand, deleteCommand);
+        ReadFireStationCommand readFireStationCommand = new ReadFireStationCommandImpl(repository);
+        service = new FireStationServiceImpl(readFireStationCommand, addCommand, updateCommand, deleteCommand);
     }
 
     @Test
