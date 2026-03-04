@@ -8,11 +8,12 @@ import com.safetynet.alerts.safetynetalertsservice.model.Person;
 import com.safetynet.alerts.safetynetalertsservice.repository.DataRepository;
 import com.safetynet.alerts.safetynetalertsservice.service.childalert.interfaces.ChildrenAlertService;
 import com.safetynet.alerts.safetynetalertsservice.util.AgeCalculator;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
 import java.util.List;
-
+@Service
 public class ChildrenAlertServiceImpl implements ChildrenAlertService {
     private final DataRepository repository;
 
