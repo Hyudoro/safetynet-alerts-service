@@ -24,14 +24,15 @@ public class MedicalRecordsController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void AddMedicalRecord(@RequestBody @Valid MedicalRecordAddDTO request){
+    public void addMedicalRecord(@RequestBody @Valid MedicalRecordAddDTO request){
         logger.info("Adding Medical Record mapping nom={} firstName = {}", request.firstName(), request.firstName());
         MedicalRecord medicalRecord = new MedicalRecord(request.firstName(), request.lastName(), request.birthDate(),request.medications(),request.allergies());
         service.addMedicalRecord(medicalRecord);
     }
 
-    @DeleteMapping
-    public void DeleteMedicalRecord(@RequestParam String firstName, @RequestParam String lastName){
+    @DeleteMapping("/{firstName}/{lastName}/")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteMedicalRecord(@PathVariable String firstName, @PathVariable String lastName){
         logger.info("Deleting Medical Record mapping lastName ={} firstName = {}", lastName, firstName );
         service.deleteMedicalRecord(lastName, firstName);
     }
