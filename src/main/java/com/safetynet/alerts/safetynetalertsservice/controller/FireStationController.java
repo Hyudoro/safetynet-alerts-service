@@ -6,6 +6,7 @@ import com.safetynet.alerts.safetynetalertsservice.model.FireStation;
 import com.safetynet.alerts.safetynetalertsservice.service.firestation.interfaces.FireStationService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
@@ -23,9 +24,9 @@ public class FireStationController {
         this.service = service;
     }
 
-    @GetMapping
-    public FireStationResponseDTO getByStation(@RequestParam @NotBlank String stationNumber) {
-
+    @GetMapping("/{stationNumber}")
+    @Pattern(regexp = "\\d+")
+    public FireStationResponseDTO getByStation(@PathVariable @NotBlank String stationNumber) {
         logger.info("Incoming request station={}", stationNumber);
         FireStationResponseDTO response = service.getResidentsByStation(stationNumber);
         logger.info("Response={}", response.residents().size());
@@ -40,35 +41,36 @@ public class FireStationController {
         service.addFireStation(fireStation);
     }
 
-    @PatchMapping //Because (address,station) is the identifier of FireStation.
+    @PatchMapping //this behavior works but Its probably not the right thing to do here.
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateStation(@RequestBody @Valid FireStationUpdateDTO request) {
         logger.info("Updating fireStation mapping address={} oldStation={} newStation={}",
                 request.address(), request.oldStationNumber(), request.newStationNumber());
-
         FireStation oldFireStation = new FireStation(request.address(), request.oldStationNumber());
         Integer stationNumber = Integer.valueOf(request.newStationNumber());
         service.updateFireStation(oldFireStation, stationNumber);
     }
 
     @DeleteMapping(params = "address")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteFireStationsByAddress(@RequestParam @NotBlank String address){
         logger.info("Deleting FireStation(s) covering address={}",address);
         service.deleteMappingsByAddress(address);
     }
 
     @DeleteMapping(params = "stationNumber")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteFireStationByStation(@RequestParam @NotBlank String stationNumber){
         logger.info("Deleting FireStation(s) with number ={}",stationNumber);
         service.deleteMappingsByStation(stationNumber);
     }
 
     @DeleteMapping(params = {"address", "stationNumber"})
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteFireStation(@RequestParam @NotBlank String address, @RequestParam @NotBlank String stationNumber){
         logger.info("Deleting FireStation mapping address={} station={} ",address,stationNumber);
         FireStation fireStation = new FireStation(address, stationNumber);
         service.deleteMapping(fireStation);
     }
-
-
 
 }

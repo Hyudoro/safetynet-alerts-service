@@ -45,7 +45,7 @@ public class PersonController {
     @PutMapping("/{lastName}/{firstName}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updatePerson(@PathVariable String lastName, @PathVariable String firstName,
-                             @RequestBody PersonUpdateDTO newData){
+                             @RequestBody @Valid PersonUpdateDTO newData){
         logger.info("Updating Person mapping lastname = {} firstname = {}", lastName, firstName);
         Person person = new Person(
                 firstName,
