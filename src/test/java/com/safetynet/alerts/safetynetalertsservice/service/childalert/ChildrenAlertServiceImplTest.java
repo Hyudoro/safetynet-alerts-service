@@ -30,7 +30,7 @@ public class ChildrenAlertServiceImplTest {
     }
 
     @Test
-    void shouldReturnChildrenAndTheirHouseHoldMembersByAddress() {
+    void shouldReturnChildrenAndTheirHouseHoldMembersByAddressTest() {
         /*2 children, 3 adults, 1 child has 2 household members, and 1 only 1 household member
 
         Reminder : To be considered a child's household member, sharing the same (lastName, address) is required.
@@ -69,7 +69,7 @@ public class ChildrenAlertServiceImplTest {
     }
 
     @Test
-    void shouldReturnEmptyResponseIfNoChildrenFoundAtThatAddress(){
+    void shouldReturnEmptyResponseIfNoChildrenFoundAtThatAddressTest(){
         Person person1 = new Person("Emma", "Durand", "300 rue Moreno", "Paris", "06000", "060-111-2222", "emma.durand@email.com");
         MedicalRecord mR1 = new MedicalRecord("Emma", "Durand", "04/12/1900", List.of(), List.of());
         when(repository.findAllPersons()).thenReturn(List.of(person1));
@@ -78,9 +78,4 @@ public class ChildrenAlertServiceImplTest {
         assertThat(response).isNotNull();
         assertThat(response.childAndHouseHoldMembers()).isEmpty();
     }
-
-
-
-
-
 }
