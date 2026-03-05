@@ -23,7 +23,6 @@ public class ChildrenAlertServiceImpl implements ChildrenAlertService {
 
     @Override
     public ChildrenAlertResponseDTO getChildrenAndTheirHouseHoldMembersByAddress(String address) {
-
         List<Person> personsAtAddress = repository.findAllPersons().stream()
                 .filter(p -> p.address().equals(address) &&
                         repository.findAllMedicalRecords().stream()
