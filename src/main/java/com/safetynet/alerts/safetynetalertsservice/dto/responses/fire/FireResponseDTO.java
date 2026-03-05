@@ -4,6 +4,6 @@ import java.util.List;
 
 public record FireResponseDTO(
         List<ResidentMedicalDTO> residents,
-        String stationNumber
+        List<String> stationNumber //Because an address can covered by multiple stations.
 ) {
 }
