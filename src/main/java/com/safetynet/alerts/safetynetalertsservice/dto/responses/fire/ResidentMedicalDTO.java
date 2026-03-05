@@ -1,10 +1,13 @@
 package com.safetynet.alerts.safetynetalertsservice.dto.responses.fire;
 
+import jakarta.validation.constraints.NotBlank;
+
+import java.util.List;
+
 public record ResidentMedicalDTO(
-        String firstName,
-        String lastName,
-        String phone,
-        int age,
-        String[] medications,
-        String[] allergies
+        @NotBlank String lastName,
+        @NotBlank  String phoneNumber,
+        @NotBlank int age,
+        @NotBlank List<String> medications,
+        @NotBlank List<String> allergies
 ) {}
