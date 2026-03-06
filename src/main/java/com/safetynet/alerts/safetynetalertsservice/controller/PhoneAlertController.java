@@ -23,7 +23,7 @@ public class PhoneAlertController {
 
     @GetMapping
     public PhoneAlertResponseDTO getPhonesByStation(@RequestParam @NotBlank String firestation) {
-        logger.info("Incoming request station={} ", firestation);
+        logger.info("Incoming request station= {}", firestation);
         return service.getPhonesByStation(firestation);
     }
 }
