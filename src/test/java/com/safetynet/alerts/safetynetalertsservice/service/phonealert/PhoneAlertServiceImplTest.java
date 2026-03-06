@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class PhoneAlertServiceImplTest {
     @Mock DataRepository repository;
-    PhoneAlertService service;
+    private PhoneAlertService service;
 
     @BeforeEach
     void setUp() {

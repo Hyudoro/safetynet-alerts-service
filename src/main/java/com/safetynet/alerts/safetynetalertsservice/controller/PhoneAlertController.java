@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/phoneAlert")
-@Pattern(regexp = "\\d+")
 public class PhoneAlertController {
     private final PhoneAlertService service;
     private final Logger logger = LogManager.getLogger(PhoneAlertController.class);
@@ -22,9 +21,9 @@ public class PhoneAlertController {
         this.service = service;
     }
 
-    @GetMapping("/{stationNumber}")
-    public PhoneAlertResponseDTO getPhonesByStation(@RequestParam @NotBlank String StationNumber) {
-        logger.info("Incoming request station={} ", StationNumber);
-        return service.getPhonesByStation(StationNumber);
+    @GetMapping
+    public PhoneAlertResponseDTO getPhonesByStation(@RequestParam @NotBlank String firestation) {
+        logger.info("Incoming request station={} ", firestation);
+        return service.getPhonesByStation(firestation);
     }
 }

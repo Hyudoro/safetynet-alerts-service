@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/fire")
 public class FireController {
     private final FireService  service;
-    private Logger logger = LogManager.getLogger(FireController.class);
+    private final Logger logger = LogManager.getLogger(FireController.class);
 
     public FireController(FireService service) {
         this.service = service;
     }
 
-    @GetMapping("/{address}")
+    @GetMapping
     public FireResponseDTO getResidentMedicalByAddress(@RequestParam String address) {
         logger.info("Incoming request address = {}", address);
         return service.getResidentMedicalByAddress(address);

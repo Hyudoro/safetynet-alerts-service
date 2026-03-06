@@ -24,9 +24,8 @@ public class FireStationController {
         this.service = service;
     }
 
-    @GetMapping("/{stationNumber}")
-    @Pattern(regexp = "\\d+")
-    public FireStationResponseDTO getResidentsByStation(@PathVariable @NotBlank String stationNumber) {
+    @GetMapping
+    public FireStationResponseDTO getResidentsByStation(@RequestParam @NotBlank String stationNumber) {
         logger.info("Incoming request station={}", stationNumber);
         FireStationResponseDTO response = service.getResidentsByStation(stationNumber);
         logger.info("Response={}", response.residents().size());

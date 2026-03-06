@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.*;
 @ActiveProfiles("test")
 public class UpdatePersonCommandImplIntegrationTest {
     @TempDir static Path tempDir;
-    @Autowired PersonService service;
+    @Autowired private PersonService service;
     @Autowired TestableJsonDataRepository repository;
 
     @DynamicPropertySource

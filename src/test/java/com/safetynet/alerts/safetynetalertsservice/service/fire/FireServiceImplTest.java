@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class FireServiceImplTest {
     @Mock DataRepository repository;
-    FireService service ;
+    private FireService service ;
 
     @BeforeEach
     void setUp(){

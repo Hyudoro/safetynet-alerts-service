@@ -29,7 +29,7 @@ public class ChildAlertController {
         this.service = service;
     }
 
-    @GetMapping("/{address}")
+    @GetMapping
     public ChildrenAlertResponseDTO getChildrenByAddress(@RequestParam @NotBlank String address){
         logger.info("Getting children by address = {} ", address);
         return service.getChildrenAndTheirHouseHoldMembersByAddress(address);
