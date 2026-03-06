@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.*;
 @ActiveProfiles("test")
 public class UpdateMedicalRecordCommandImplIntegrationTest {
     @TempDir static Path temp;
-    @Autowired MedicalRecordService service;
+    @Autowired private MedicalRecordService service;
     @Autowired TestableJsonDataRepository repository;
 
     @DynamicPropertySource

@@ -23,7 +23,7 @@ import java.nio.file.Path;
 public class DeleteMedicalRecordCommandImplIntegrationTest {
 
     @TempDir static Path tempDir;
-    @Autowired MedicalRecordService service;
+    @Autowired private MedicalRecordService service;
     @Autowired TestableJsonDataRepository dataRepository;
 
     @DynamicPropertySource

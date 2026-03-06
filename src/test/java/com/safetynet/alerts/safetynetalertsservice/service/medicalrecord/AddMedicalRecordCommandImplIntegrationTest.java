@@ -24,7 +24,7 @@ import java.util.List;
 public class AddMedicalRecordCommandImplIntegrationTest {
     @TempDir static Path temp;
     @Autowired
-    MedicalRecordServiceImpl service;
+    private MedicalRecordServiceImpl service;
     @Autowired
     TestableJsonDataRepository repository;
     @DynamicPropertySource
@@ -38,7 +38,7 @@ public class AddMedicalRecordCommandImplIntegrationTest {
     }
 
     @Test
-    void shoudAddMedicalRecordToTheRepositoryIntegrationTest(){
+    void shouldAddMedicalRecordToTheRepositoryIntegrationTest(){
         List<String> medications = new ArrayList<>(List.of("aznol:350mg","pharmacol:200mg"));
         List<String> allergies = new ArrayList<>(List.of("nillacilan","peanut","shellfish"));
         MedicalRecord medicalRecord = new MedicalRecord("George",

@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class AddPersonCommandImplIntegrationTest {
     @TempDir static Path tempDir;
     @Autowired TestableJsonDataRepository repository;
-    @Autowired PersonService service;
+    @Autowired private PersonService service;
 
     @DynamicPropertySource
     static void dynamicProperties(DynamicPropertyRegistry registry) {

@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.*;
 @SpringBootTest
 @ActiveProfiles("test")
 public class PhoneAlertServiceImplIntegrationTest {
-    @Autowired PhoneAlertService service;
+    @Autowired private PhoneAlertService service;
     /*station 2
         29 15th St : Jonanathan Marrack 841-874-6513
         951 LoneTree Rd : Eric Cadigan 841-874-7458

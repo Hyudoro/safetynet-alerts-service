@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 @ActiveProfiles("test")
 public class DeletePersonCommandImplIntegrationTest {
         @TempDir static Path tempDir;
-        @Autowired PersonService service;
+        @Autowired private PersonService service;
         @Autowired TestableJsonDataRepository repository;
 
         @DynamicPropertySource

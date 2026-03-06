@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.*;
 @ActiveProfiles("test")
 public class FireServiceImplIntegrationTest {
 
-    @Autowired FireService service;
+    @Autowired private FireService service;
 
     @Test
     void shouldReturnResidentsAndStationIntegrationTest(){
