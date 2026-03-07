@@ -1,5 +1,5 @@
 package com.safetynet.alerts.safetynetalertsservice.repository;
-import com.safetynet.alerts.safetynetalertsservice.model.DataWrapper;
+import com.safetynet.alerts.safetynetalertsservice.repository.DataWrapper;
 import com.safetynet.alerts.safetynetalertsservice.model.FireStation;
 import com.safetynet.alerts.safetynetalertsservice.model.MedicalRecord;
 import com.safetynet.alerts.safetynetalertsservice.model.Person;

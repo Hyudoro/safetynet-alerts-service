@@ -1,7 +1,7 @@
 package com.safetynet.alerts.safetynetalertsservice.repository;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.safetynet.alerts.safetynetalertsservice.model.DataWrapper;
+import tools.jackson.databind.ObjectMapper;
+import com.safetynet.alerts.safetynetalertsservice.repository.DataWrapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;

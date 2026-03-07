@@ -1,7 +1,7 @@
 package com.safetynet.alerts.safetynetalertsservice.service.medicalrecord.Impl;
 
 
-import com.safetynet.alerts.safetynetalertsservice.model.DataWrapper;
+import com.safetynet.alerts.safetynetalertsservice.repository.DataWrapper;
 import com.safetynet.alerts.safetynetalertsservice.model.MedicalRecord;
 import com.safetynet.alerts.safetynetalertsservice.model.exception.OldMedicalRecordNotFoundException;
 import com.safetynet.alerts.safetynetalertsservice.repository.DataRepository;

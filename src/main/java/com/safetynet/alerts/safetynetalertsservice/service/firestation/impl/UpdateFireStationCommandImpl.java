@@ -1,6 +1,6 @@
 package com.safetynet.alerts.safetynetalertsservice.service.firestation.impl;
 
-import com.safetynet.alerts.safetynetalertsservice.model.DataWrapper;
+import com.safetynet.alerts.safetynetalertsservice.repository.DataWrapper;
 import com.safetynet.alerts.safetynetalertsservice.model.FireStation;
 import com.safetynet.alerts.safetynetalertsservice.model.exception.OldFireStationNotFoundException;
 import com.safetynet.alerts.safetynetalertsservice.repository.DataRepository;
