@@ -43,6 +43,5 @@ public class FloodServiceImplIntegrationTest {
     }
     @Test void shouldReturnEmptyListIntegrationTest(){
         assertThat(service.getHouseHoldsUnderStations(List.of()).households().isEmpty()).isTrue();
-
     }
 }

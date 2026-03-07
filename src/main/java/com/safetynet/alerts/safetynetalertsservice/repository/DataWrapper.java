@@ -1,5 +1,9 @@
-package com.safetynet.alerts.safetynetalertsservice.model;
+package com.safetynet.alerts.safetynetalertsservice.repository;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.safetynet.alerts.safetynetalertsservice.model.FireStation;
+import com.safetynet.alerts.safetynetalertsservice.model.MedicalRecord;
+import com.safetynet.alerts.safetynetalertsservice.model.Person;
 
 import java.util.List;
 

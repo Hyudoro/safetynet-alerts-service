@@ -9,4 +9,5 @@ public record Person (String firstName,
      String phone,
      String email)
 {
+    public record FullName(String lastName, String firstName) {}
 }

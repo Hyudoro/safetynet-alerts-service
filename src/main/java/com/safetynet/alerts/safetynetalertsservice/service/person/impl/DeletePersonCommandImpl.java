@@ -1,6 +1,6 @@
 package com.safetynet.alerts.safetynetalertsservice.service.person.impl;
 
-import com.safetynet.alerts.safetynetalertsservice.model.DataWrapper;
+import com.safetynet.alerts.safetynetalertsservice.repository.DataWrapper;
 import com.safetynet.alerts.safetynetalertsservice.model.Person;
 import com.safetynet.alerts.safetynetalertsservice.model.exception.OldPersonNotFoundException;
 import com.safetynet.alerts.safetynetalertsservice.repository.DataRepository;

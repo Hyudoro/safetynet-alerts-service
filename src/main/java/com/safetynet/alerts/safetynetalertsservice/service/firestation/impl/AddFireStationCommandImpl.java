@@ -1,6 +1,6 @@
 package com.safetynet.alerts.safetynetalertsservice.service.firestation.impl;
 
-import com.safetynet.alerts.safetynetalertsservice.model.DataWrapper;
+import com.safetynet.alerts.safetynetalertsservice.repository.DataWrapper;
 import com.safetynet.alerts.safetynetalertsservice.model.FireStation;
 import com.safetynet.alerts.safetynetalertsservice.model.exception.DuplicateFireStationMappingException;
 import com.safetynet.alerts.safetynetalertsservice.repository.DataRepository;

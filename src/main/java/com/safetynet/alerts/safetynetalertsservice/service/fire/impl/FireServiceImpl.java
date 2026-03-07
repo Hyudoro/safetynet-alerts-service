@@ -35,18 +35,18 @@ public class FireServiceImpl implements FireService
 
 
 
-        Map<FullName, MedicalHistory> personMeds =
+        Map<Person.FullName, MedicalRecord.MedicalHistory> personMeds =
                 repository.findAllMedicalRecords().stream()
                         .collect(Collectors.toMap(
-                                key -> new FullName(key.lastName(), key.firstName()),
-                                value -> new MedicalHistory(value.medications(), value.allergies(), AgeCalculator.calculate(value.birthDate())),
+                                key -> new Person.FullName(key.lastName(), key.firstName()),
+                                value -> new MedicalRecord.MedicalHistory(value.medications(), value.allergies(), AgeCalculator.calculate(value.birthDate())),
                                 (existing, replacement) -> existing));
 
         List<ResidentMedicalDTO> residentMedicalDTOS = new ArrayList<>();
 
         for(Person person: repository.findAllPersons()){
             if(person.address().equals(address)){
-                MedicalHistory medicalHistory = personMeds.get(new FullName(person.lastName(), person.firstName()));
+                MedicalRecord.MedicalHistory medicalHistory = personMeds.get(new Person.FullName(person.lastName(), person.firstName()));
                 if(medicalHistory == null){ continue;}
                 ResidentMedicalDTO newRMD = new ResidentMedicalDTO(
                         person.lastName(),

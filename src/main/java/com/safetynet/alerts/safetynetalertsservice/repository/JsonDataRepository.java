@@ -1,7 +1,7 @@
 package com.safetynet.alerts.safetynetalertsservice.repository;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.safetynet.alerts.safetynetalertsservice.model.DataWrapper;
+import tools.jackson.databind.ObjectMapper;
+import com.safetynet.alerts.safetynetalertsservice.repository.DataWrapper;
 import com.safetynet.alerts.safetynetalertsservice.model.FireStation;
 import com.safetynet.alerts.safetynetalertsservice.model.MedicalRecord;
 import com.safetynet.alerts.safetynetalertsservice.model.Person;
@@ -80,10 +80,6 @@ public class JsonDataRepository implements DataRepository {
     }
 
     protected void persist(DataWrapper data) {
-        try {
-            objectMapper.writerWithDefaultPrettyPrinter().writeValue(dataPath.toFile(), data);
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to persist data", e);
-        }
+        objectMapper.writerWithDefaultPrettyPrinter().writeValue(dataPath.toFile(), data);
     }
 }
