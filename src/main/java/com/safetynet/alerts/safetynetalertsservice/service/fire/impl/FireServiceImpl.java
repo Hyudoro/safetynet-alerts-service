@@ -40,8 +40,7 @@ public class FireServiceImpl implements FireService
                         .collect(Collectors.toMap(
                                 key -> new FullName(key.lastName(), key.firstName()),
                                 value -> new MedicalHistory(value.medications(), value.allergies(), AgeCalculator.calculate(value.birthDate())),
-                                (existing, replacement) -> existing
-                        ));
+                                (existing, replacement) -> existing));
 
         List<ResidentMedicalDTO> residentMedicalDTOS = new ArrayList<>();
 

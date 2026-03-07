@@ -29,8 +29,7 @@ public class PersonInfoServiceImpl implements PersonInfoService {
                         mR -> lastName.equals(mR.lastName()))
                         .collect(Collectors.toMap(
                                 key -> new FullName(key.lastName(),key.firstName()),
-                                               value -> new MedicalHistory(
-                                                       value.medications(),value.allergies(), AgeCalculator.calculate(value.birthDate()))
+                                               value -> new MedicalHistory(value.medications(),value.allergies(), AgeCalculator.calculate(value.birthDate()))
                                 ,(existing, replacement) -> existing
 
                         ));
