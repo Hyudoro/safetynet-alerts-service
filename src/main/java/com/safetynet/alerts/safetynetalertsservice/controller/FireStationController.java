@@ -6,7 +6,7 @@ import com.safetynet.alerts.safetynetalertsservice.model.FireStation;
 import com.safetynet.alerts.safetynetalertsservice.service.firestation.interfaces.FireStationService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;

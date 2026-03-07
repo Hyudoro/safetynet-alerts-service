@@ -14,5 +14,6 @@ public record MedicalRecord (
      List<String> medications,
      List<String> allergies
 )
-{}
+{
+}
 
