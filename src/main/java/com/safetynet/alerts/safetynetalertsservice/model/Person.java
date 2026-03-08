@@ -1,7 +1,8 @@
 package com.safetynet.alerts.safetynetalertsservice.model;
 
 
-public record Person (String firstName,
+public record Person (
+     String firstName,
      String lastName,
      String address,
      String city,

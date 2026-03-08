@@ -42,7 +42,7 @@ public class FireStationController {
 
     @PatchMapping //this behavior works but Its probably not the right thing to do here.
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateStation(@RequestBody @Valid FireStationUpdateDTO request) {
+    public void updateStationStationCovering(@RequestBody @Valid FireStationUpdateDTO request) {
         logger.info("Updating fireStation mapping address={} oldStation={} newStation={}",
                 request.address(), request.oldStationNumber(), request.newStationNumber());
         FireStation oldFireStation = new FireStation(request.address(), request.oldStationNumber());
