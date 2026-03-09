@@ -29,7 +29,7 @@ public class FireStationReadControllerTest {
 
 
     @Test
-    void getResidentsByStationShouldReturn200WithResidentsWhenStationFound() throws Exception {
+    void getResidentsByStation_ShouldReturn200WithResidents_WhenStationFound() throws Exception {
 
         ResidentDTO resident = new ResidentDTO("John", "Boyd", "1509 Culver St", "841-874-6512");
         FireStationResponseDTO stubResponse = new FireStationResponseDTO(List.of(resident), 1, 0);
@@ -47,9 +47,9 @@ public class FireStationReadControllerTest {
 
 
     @Test
-    void getResidentsByStationShouldReturn200WithEmptyListWhenNoResidents() throws Exception {
+    void getResidentsByStation_ShouldReturn200WithEmptyList_WhenNoResidents() throws Exception {
 
-        FireStationResponseDTO response = new FireStationResponseDTO(List.of(), 0L, 0L);
+        FireStationResponseDTO response = new FireStationResponseDTO(List.of(), 0, 0);
         given(service.getResidentsByStation("99")).willReturn(response);
 
 
@@ -62,14 +62,14 @@ public class FireStationReadControllerTest {
 
 
     @Test
-    void getResidentsByStationShouldReturn400WhenStationNumberIsBlank() throws Exception {
+    void getResidentsByStation_ShouldReturn400_WhenStationNumberIsBlank() throws Exception {
         mockMvc.perform(get("/firestation").param("stationNumber", ""))
                 .andExpect(status().isBadRequest());
     }
 
 
     @Test
-    void getResidentsByStationShouldReturn400WhenStationNumberIsMissing() throws Exception {
+    void getResidentsByStation_ShouldReturn400_WhenStationNumberIsMissing() throws Exception {
         mockMvc.perform(get("/firestation"))
                 .andExpect(status().isBadRequest());
     }
