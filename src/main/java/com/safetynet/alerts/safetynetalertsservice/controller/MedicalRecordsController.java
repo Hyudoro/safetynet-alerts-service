@@ -4,7 +4,9 @@ import com.safetynet.alerts.safetynetalertsservice.dto.requests.medicalrecord.ad
 import com.safetynet.alerts.safetynetalertsservice.model.MedicalRecord;
 import com.safetynet.alerts.safetynetalertsservice.service.medicalrecord.interfaces.MedicalRecordService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,14 +27,15 @@ public class MedicalRecordsController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void addMedicalRecord(@RequestBody @Valid MedicalRecordAddDTO request){
-        logger.info("Adding Medical Record mapping nom={} firstName = {}", request.firstName(), request.firstName());
+        logger.info("Adding Medical Record mapping lastName ={} firstName = {}", request.lastName(), request.firstName());
         MedicalRecord medicalRecord = new MedicalRecord(request.firstName(), request.lastName(), request.birthDate(),request.medications(),request.allergies());
         service.addMedicalRecord(medicalRecord);
     }
 
-    @DeleteMapping("/{firstName}/{lastName}/")
+    @DeleteMapping("/{firstName}/{lastName}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteMedicalRecord(@PathVariable String firstName, @PathVariable String lastName){
+    @Validated
+    public void deleteMedicalRecord(@PathVariable @NotBlank String firstName, @PathVariable @NotBlank String lastName){
         logger.info("Deleting Medical Record mapping lastName ={} firstName = {}", lastName, firstName );
         service.deleteMedicalRecord(lastName, firstName);
     }
@@ -40,7 +43,7 @@ public class MedicalRecordsController {
 
     @PutMapping("/{firstName}/{lastName}/allergies")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateAllergiesMedicalRecord(@PathVariable String firstName, @PathVariable String lastName,
+    public void updateAllergiesMedicalRecord(@PathVariable @NotBlank String firstName, @PathVariable @NotBlank String lastName,
                                 @RequestBody @Valid List<String> allergies)
 
     {
