@@ -44,21 +44,29 @@ public class MedicalRecordsController {
     @PutMapping("/{firstName}/{lastName}/allergies")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateAllergiesMedicalRecord(@PathVariable @NotBlank String firstName, @PathVariable @NotBlank String lastName,
-                                @RequestBody @Valid List<String> allergies)
+                                @RequestBody @Valid List<@NotBlank String> allergies)
 
     {
         logger.info("Updating medical record's allergies for {} {}", firstName, lastName);
         service.updateAllergyMedicalRecord(firstName, lastName, allergies);
     }
 
-    @PutMapping("/{firstName}/{lastName}/medication")
+    @PutMapping("/{firstName}/{lastName}/medications")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateMedicationMedicalRecord(@PathVariable String firstName, @PathVariable String lastName,
-                                @RequestBody @Valid List<String> medication)
+    public void updateMedicationMedicalRecord(@PathVariable String firstName, @PathVariable String lastName, @RequestBody @Valid List<@NotBlank String> medication)
 
     {
         logger.info("Updating medical record's medication for {} {}", firstName, lastName);
         service.updateMedicationMedicalRecord(firstName, lastName, medication);
     }
+
+
+
+
+
+
+
+
+
 
 }

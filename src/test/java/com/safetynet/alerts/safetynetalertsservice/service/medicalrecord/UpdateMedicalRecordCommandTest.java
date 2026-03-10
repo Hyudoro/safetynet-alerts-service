@@ -48,7 +48,7 @@ public class UpdateMedicalRecordCommandTest {
         List<String> allergies = new ArrayList<>();
         MedicalRecord medicalRecord = new MedicalRecord(
                 "George",
-                "monte",
+                "Monte",
                 "",
                 medications,
                 allergies);
@@ -61,7 +61,7 @@ public class UpdateMedicalRecordCommandTest {
         return null;
     }).when(dataRepository).update(any());
 
-    service.updateMedicationMedicalRecord("monte","George", new ArrayList<>(List.of("anzol:300mg", "paracetamol:200mg")));
+    service.updateMedicationMedicalRecord("George","Monte", new ArrayList<>(List.of("anzol:300mg", "paracetamol:200mg")));
 
     }
 
@@ -84,7 +84,7 @@ public class UpdateMedicalRecordCommandTest {
             List<String> allergies = new ArrayList<>(List.of("nillacilan","peanut","shellfish"));
             MedicalRecord medicalRecord = new MedicalRecord(
                     "George",
-                    "monte",
+                    "Monte",
                     "",
                     medications,
                     allergies);
@@ -97,7 +97,7 @@ public class UpdateMedicalRecordCommandTest {
             return null;
         }).when(dataRepository).update(any());
 
-        service.updateAllergyMedicalRecord("monte","George", new ArrayList<>(List.of("ananas")));
+        service.updateAllergyMedicalRecord("George","Monte", new ArrayList<>(List.of("ananas")));
 
     }
 
