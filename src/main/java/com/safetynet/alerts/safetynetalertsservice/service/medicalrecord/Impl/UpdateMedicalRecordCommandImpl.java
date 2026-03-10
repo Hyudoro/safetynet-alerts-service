@@ -22,7 +22,7 @@ public class UpdateMedicalRecordCommandImpl implements UpdateMedicalRecordComman
     }
 
     @Override
-    public void executeUpdatingMedication(String lastName, String firstName, List<String> medication) {
+    public void executeUpdatingMedication(String firstName, String lastName, List<String> medication) {
         repository.update(oldData -> {
             Set<MedicalRecord> currentData = new HashSet<>(oldData.medicalRecords());
 
@@ -40,7 +40,7 @@ public class UpdateMedicalRecordCommandImpl implements UpdateMedicalRecordComman
     }
 
     @Override
-    public void executeUpdatingAllergy(String lastName, String firstName, List<String> allergy) {
+    public void executeUpdatingAllergy(String firstName, String lastName, List<String> allergy) {
         repository.update(oldData -> {
             Set<MedicalRecord> currentData = new HashSet<>(oldData.medicalRecords());
 

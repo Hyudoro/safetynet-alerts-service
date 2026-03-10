@@ -36,12 +36,12 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
     }
 
     @Override
-    public void updateMedicationMedicalRecord(String lastName, String firstName, List<String> medication) {
-        updateCommand.executeUpdatingMedication(lastName, firstName,medication);
+    public void updateMedicationMedicalRecord(String firstName, String lastName, List<String> medication) {
+        updateCommand.executeUpdatingMedication(firstName, lastName,medication);
     }
 
     @Override
-    public void updateAllergyMedicalRecord(String lastName, String firstName, List<String> allergy) {
-        updateCommand.executeUpdatingAllergy(lastName, firstName,allergy);
+    public void updateAllergyMedicalRecord(String firstName, String lastName, List<String> allergy) {
+        updateCommand.executeUpdatingAllergy(firstName, lastName, allergy);
     }
 }

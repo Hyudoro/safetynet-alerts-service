@@ -39,9 +39,4 @@ public class MedicalRecordDeleteControllerTest {
         BDDMockito.doThrow(OldMedicalRecordNotFoundException.class).when(service).deleteMedicalRecord("Unknown","Unknown");
         mockMvc.perform(delete("/medicalRecord/{firstName}/{lastName}","Unknown","Unknown")).andExpect(status().isNotFound());
     }
-
-    @Test
-
-
-
 }

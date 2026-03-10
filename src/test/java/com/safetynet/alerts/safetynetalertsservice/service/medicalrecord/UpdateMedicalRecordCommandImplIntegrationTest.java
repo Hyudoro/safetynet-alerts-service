@@ -41,7 +41,7 @@ public class UpdateMedicalRecordCommandImplIntegrationTest {
 
     @Test
     void shouldUpdateMedicalRecordMedicationIntegrationTest(){
-        service.updateMedicationMedicalRecord("Cooper","Lily", new ArrayList<>(List.of("paracetamol:300mg")));
+        service.updateMedicationMedicalRecord("Lily","Cooper", new ArrayList<>(List.of("paracetamol:300mg")));
         MedicalRecord updatedMedicalRecord = repository.findAllMedicalRecords()
                 .stream()
                 .filter(mR -> mR.lastName().equals("Cooper") && mR.firstName().equals("Lily"))
@@ -52,7 +52,7 @@ public class UpdateMedicalRecordCommandImplIntegrationTest {
 
     @Test
     void shouldUpdateMedicalRecordAllergyIntegrationTest(){
-        service.updateAllergyMedicalRecord("Cooper","Lily", new ArrayList<>(List.of("butter")));
+        service.updateAllergyMedicalRecord("Lily","Cooper", new ArrayList<>(List.of("butter")));
         MedicalRecord updatedMedicalRecord = repository.findAllMedicalRecords()
                 .stream()
                 .filter(mR -> mR.lastName().equals("Cooper") && mR.firstName().equals("Lily"))
