@@ -8,10 +8,6 @@ public record PersonUpdateDTO(
         @NotBlank String zip,
         @NotBlank String phone,
         @NotBlank String email
-) {
-
-
-
-
-
+)
+{
 }

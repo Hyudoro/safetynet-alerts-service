@@ -5,9 +5,11 @@ import com.safetynet.alerts.safetynetalertsservice.dto.requests.person.PersonUpd
 import com.safetynet.alerts.safetynetalertsservice.model.Person;
 import com.safetynet.alerts.safetynetalertsservice.service.person.interfaces.PersonService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,12 +17,14 @@ import org.springframework.web.bind.annotation.*;
 public class PersonController {
     private final Logger logger = LoggerFactory.getLogger(PersonController.class);
     private final PersonService service;
+
     public PersonController(PersonService service) {
         this.service = service;
     }
-    @DeleteMapping("/{lastName}/{firstName}")
+
+    @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletePerson(@PathVariable String lastName, @PathVariable String firstName){
+    public void deletePerson(@RequestParam @NotBlank String lastName, @RequestParam @NotBlank String firstName){
         logger.info("Deleting Person mapping lastname = {} firstname = {}", lastName, firstName);
         service.deletePerson(lastName, firstName);
     }
@@ -42,9 +46,10 @@ public class PersonController {
         service.addPerson(person);
     }
 
-    @PutMapping("/{lastName}/{firstName}")
+    @PatchMapping("/{lastName}/{firstName}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updatePerson(@PathVariable String lastName, @PathVariable String firstName,
+    @Validated
+    public void updatePerson(@PathVariable @NotBlank String lastName, @PathVariable @NotBlank String firstName,
                              @RequestBody @Valid PersonUpdateDTO newData){
         logger.info("Updating Person mapping lastname = {} firstname = {}", lastName, firstName);
         Person person = new Person(
