@@ -1,6 +1,7 @@
 package com.safetynet.alerts.safetynetalertsservice.service.medicalrecord;
 
 
+import com.safetynet.alerts.safetynetalertsservice.model.MedicalRecord;
 import com.safetynet.alerts.safetynetalertsservice.model.exception.OldMedicalRecordNotFoundException;
 import com.safetynet.alerts.safetynetalertsservice.repository.TestableJsonDataRepository;
 import com.safetynet.alerts.safetynetalertsservice.service.medicalrecord.interfaces.MedicalRecordService;
@@ -39,7 +40,7 @@ public class DeleteMedicalRecordCommandImplIntegrationTest {
 
     @Test
     void shouldDeleteMedicalRecordCommandIntegrationTest(){
-        service.deleteMedicalRecord("Boyd","Felicia");
+        service.deleteMedicalRecord(new MedicalRecord.Id("Felicia","Boyd"));
         assertFalse(dataRepository.findAllMedicalRecords().stream().anyMatch(
                 Mr -> Mr.lastName().equals("Boyd") &&
                                      Mr.firstName().equals("Felicia")
@@ -49,7 +50,7 @@ public class DeleteMedicalRecordCommandImplIntegrationTest {
     @Test
     void shouldThrowsRunTimeExceptionIfOlMedicalRecordNotFoundIntegrationTest(){
         assertThrows(OldMedicalRecordNotFoundException.class,() ->
-                service.deleteMedicalRecord("rust","isLife"));
+                service.deleteMedicalRecord(new MedicalRecord.Id("isLife","rust")));
     }
 
 }

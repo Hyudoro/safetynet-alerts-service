@@ -68,7 +68,7 @@ public class UpdatePersonCommandImplTest {
                     ));
                 return null;
                 }).when(repository).update(any());
-        service.updatePerson("Doe","John",
+        service.updatePerson(new Person.FullName("Doe","John"),
                 new Person(
                 "John",
                 "Doe",
@@ -87,7 +87,7 @@ public class UpdatePersonCommandImplTest {
             DataWrapper oldData = new DataWrapper(List.of(),List.of(),List.of());
             return lambda.apply(oldData);
         }).when(repository).update(any());
-        assertThatThrownBy(()-> service.updatePerson("Doe","John",new Person(
+        assertThatThrownBy(()-> service.updatePerson(new Person.FullName("Doe","John"),new Person(
                 "John",
                 "Doe",
                 "300 Busch Avenue",

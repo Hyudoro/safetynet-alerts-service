@@ -15,6 +15,7 @@ public record MedicalRecord (
      List<String> allergies
 )
 {
+    public record Id(String firstName, String lastName) {}
     public record MedicalHistory(List<String> medications, List<String> allergies, int age) {}
 }
 

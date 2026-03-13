@@ -21,13 +21,13 @@ public class PersonServiceImpl implements PersonService {
 
 
     @Override
-    public void updatePerson(String lastName, String firstName, Person person) {
-        updatePersonCommand.execute(lastName, firstName, person);
+    public void updatePerson(Person.FullName id, Person person) {
+        updatePersonCommand.execute(id, person);
     }
 
     @Override
-    public void deletePerson(String lastName, String firstName) {
-        deletePersonCommand.execute(lastName, firstName);
+    public void deletePerson(Person.FullName id) {
+        deletePersonCommand.execute(id);
     }
 
     @Override

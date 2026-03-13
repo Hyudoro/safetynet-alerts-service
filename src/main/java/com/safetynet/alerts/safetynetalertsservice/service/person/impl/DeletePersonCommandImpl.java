@@ -20,14 +20,14 @@ public class DeletePersonCommandImpl implements DeletePersonCommand {
     }
 
     @Override
-    public void execute(String lastName, String firstName) {
+    public void execute(Person.FullName id) {
         repository.update(oldData -> {
             Set<Person> oldPeople = new HashSet<>(oldData.persons());
             boolean removed = oldPeople.removeIf(person ->
-                                                         person.lastName().equals(lastName) &&
-                                                         person.firstName().equals(firstName));
+                                                         person.lastName().equals(id.lastName()) &&
+                                                         person.firstName().equals(id.firstName()));
             if (!removed) {
-                throw new OldPersonNotFoundException(lastName, firstName);
+                throw new OldPersonNotFoundException(id.lastName(), id.firstName());
             }
             return new DataWrapper(List.copyOf(oldPeople),oldData.fireStations(),oldData.medicalRecords());
         });

@@ -1,5 +1,6 @@
 package com.safetynet.alerts.safetynetalertsservice.service.person;
 
+import com.safetynet.alerts.safetynetalertsservice.model.Person;
 import com.safetynet.alerts.safetynetalertsservice.model.exception.OldPersonNotFoundException;
 import com.safetynet.alerts.safetynetalertsservice.repository.TestableJsonDataRepository;
 import com.safetynet.alerts.safetynetalertsservice.service.person.interfaces.PersonService;
@@ -37,14 +38,14 @@ public class DeletePersonCommandImplIntegrationTest {
 
         @Test
         void shouldDeletePersonIntegrationTest() {
-                service.deletePerson("Boyd","John");
+                service.deletePerson(new Person.FullName("Boyd","John"));
                 assertFalse(repository.findAllPersons().stream().anyMatch(
                         p -> p.lastName().equals("Boyd") && p.firstName().equals("John")));
         }
 
         @Test
         void shouldThrowsExceptionIfPersonDoesNotExist(){
-            assertThatThrownBy(() -> service.deletePerson("Robert James","Fischer") ).isInstanceOf(OldPersonNotFoundException.class);
+            assertThatThrownBy(() -> service.deletePerson(new Person.FullName("Robert James","Fischer")) ).isInstanceOf(OldPersonNotFoundException.class);
         }
 
 }

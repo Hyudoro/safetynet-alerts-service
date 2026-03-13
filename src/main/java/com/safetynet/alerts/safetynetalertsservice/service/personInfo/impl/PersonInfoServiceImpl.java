@@ -23,11 +23,11 @@ public class PersonInfoServiceImpl implements PersonInfoService {
 
     @Override
     public PersonInfoResponseDTO getPersonInfo(String lastName) {
-        Map<Person.FullName, MedicalRecord.MedicalHistory> PersonMeds =
+        Map<MedicalRecord.Id, MedicalRecord.MedicalHistory> PersonMeds =
                 repository.findAllMedicalRecords().stream().filter(
                         mR -> lastName.equals(mR.lastName()))
                         .collect(Collectors.toMap(
-                                key -> new Person.FullName(key.lastName(),key.firstName()),
+                                key -> new MedicalRecord.Id(key.firstName(), key.lastName()),
                                                value -> new MedicalRecord.MedicalHistory(value.medications(),value.allergies(), AgeCalculator.calculate(value.birthDate()))
                                 ,(existing, replacement) -> existing
 
@@ -36,7 +36,7 @@ public class PersonInfoServiceImpl implements PersonInfoService {
         List<PersonInfoDTO> value = repository.findAllPersons().stream().
                 filter(p-> lastName.equals(p.lastName()))
                 .map(p-> {
-                    MedicalRecord.MedicalHistory meds = PersonMeds.get(new Person.FullName(p.lastName(),p.firstName()));
+                    MedicalRecord.MedicalHistory meds = PersonMeds.get(new MedicalRecord.Id(p.firstName(), p.lastName()));
                     return new PersonInfoDTO(
                             p.firstName(),
                             p.lastName(),

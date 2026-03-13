@@ -37,7 +37,7 @@ public class MedicalRecordsController {
     @Validated
     public void deleteMedicalRecord(@PathVariable @NotBlank String firstName, @PathVariable @NotBlank String lastName){
         logger.info("Deleting Medical Record mapping lastName ={} firstName = {}", lastName, firstName );
-        service.deleteMedicalRecord(lastName, firstName);
+        service.deleteMedicalRecord(new MedicalRecord.Id(firstName, lastName));
     }
 
 
@@ -48,7 +48,7 @@ public class MedicalRecordsController {
 
     {
         logger.info("Updating medical record's allergies for {} {}", firstName, lastName);
-        service.updateAllergyMedicalRecord(firstName, lastName, allergies);
+        service.updateAllergyMedicalRecord(new MedicalRecord.Id(firstName, lastName), allergies);
     }
 
     @PutMapping("/{firstName}/{lastName}/medications")
@@ -57,7 +57,7 @@ public class MedicalRecordsController {
 
     {
         logger.info("Updating medical record's medication for {} {}", firstName, lastName);
-        service.updateMedicationMedicalRecord(firstName, lastName, medication);
+        service.updateMedicationMedicalRecord(new MedicalRecord.Id(firstName, lastName), medication);
     }
 
 

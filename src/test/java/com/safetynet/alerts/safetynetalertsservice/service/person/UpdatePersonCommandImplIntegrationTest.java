@@ -37,7 +37,7 @@ public class UpdatePersonCommandImplIntegrationTest {
 
     @Test
     void shouldUpdatePersonIntegrationTest(){
-        service.updatePerson("Boyd","John", new Person(
+        service.updatePerson(new Person.FullName("Boyd","John"), new Person(
                 "John",
                 "Boyd",
                 "300 Busch Avenue",
@@ -67,7 +67,7 @@ public class UpdatePersonCommandImplIntegrationTest {
 
     @Test
     void shouldThrowsExceptionIfPersonNotFoundIntegrationTest(){
-        assertThatThrownBy(() -> service.updatePerson("holliday","johnny", new Person(
+        assertThatThrownBy(() -> service.updatePerson(new Person.FullName("holliday","johnny"), new Person(
                 "John",
                 "Doe",
                 "300 Busch Avenue",

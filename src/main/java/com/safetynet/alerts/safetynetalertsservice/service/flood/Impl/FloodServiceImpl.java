@@ -35,8 +35,8 @@ Set<String> addresses = repository.findAllFireStations().stream()
                 ).toList();
 
 
-        Map<Person.FullName, MedicalRecord.MedicalHistory> meds = repository.findAllMedicalRecords().stream().collect(Collectors.toMap(
-                mR -> new Person.FullName(mR.lastName(),mR.firstName()),
+        Map<MedicalRecord.Id, MedicalRecord.MedicalHistory> meds = repository.findAllMedicalRecords().stream().collect(Collectors.toMap(
+                mR -> new MedicalRecord.Id(mR.firstName(), mR.lastName()),
                 mR -> new MedicalRecord.MedicalHistory(mR.medications(), mR.allergies(), AgeCalculator.calculate(mR.birthDate())),
                 (existing, replacement) -> existing));
 
@@ -45,7 +45,7 @@ Set<String> addresses = repository.findAllFireStations().stream()
                 concernedPeople.stream().collect(Collectors.groupingBy(
                                 Person::address,
                                 Collectors.mapping(person -> {
-                                    MedicalRecord.MedicalHistory pMeds = meds.get(new Person.FullName(person.lastName(), person.firstName()));
+                                    MedicalRecord.MedicalHistory pMeds = meds.get(new MedicalRecord.Id(person.firstName(), person.lastName()));
                                     return new FloodResidentDTO(
                                             person.firstName(),
                                             person.lastName(),

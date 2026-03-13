@@ -31,17 +31,17 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
     }
 
     @Override
-    public void deleteMedicalRecord(String lastName, String firstName) {
-         deleteCommand.execute(lastName,firstName);
+    public void deleteMedicalRecord(MedicalRecord.Id id) {
+         deleteCommand.execute(id);
     }
 
     @Override
-    public void updateMedicationMedicalRecord(String firstName, String lastName, List<String> medication) {
-        updateCommand.executeUpdatingMedication(firstName, lastName,medication);
+    public void updateMedicationMedicalRecord(MedicalRecord.Id id, List<String> medication) {
+        updateCommand.executeUpdatingMedication(id, medication);
     }
 
     @Override
-    public void updateAllergyMedicalRecord(String firstName, String lastName, List<String> allergy) {
-        updateCommand.executeUpdatingAllergy(firstName, lastName, allergy);
+    public void updateAllergyMedicalRecord(MedicalRecord.Id id, List<String> allergy) {
+        updateCommand.executeUpdatingAllergy(id, allergy);
     }
 }

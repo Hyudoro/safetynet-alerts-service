@@ -53,7 +53,7 @@ public class DeleteMedicalRecordCommandImplTest {
 
             return null;
         }).when(repository).update(any());
-        service.deleteMedicalRecord("monte","George");
+        service.deleteMedicalRecord(new MedicalRecord.Id("George","monte"));
     }
 
     @Test
@@ -62,6 +62,6 @@ public class DeleteMedicalRecordCommandImplTest {
             UnaryOperator<DataWrapper> lambda = invocation.getArgument(0);
             return lambda.apply(new DataWrapper(List.of(),List.of(),List.of()));
         }).when(repository).update(any());
-        assertThrows(OldMedicalRecordNotFoundException.class, () -> service.deleteMedicalRecord("monte","George"));
+        assertThrows(OldMedicalRecordNotFoundException.class, () -> service.deleteMedicalRecord(new MedicalRecord.Id("George","monte")));
     }
 }
