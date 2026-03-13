@@ -1,6 +1,7 @@
 package com.safetynet.alerts.safetynetalertsservice.controller.medicalrecord.delete;
 
 import com.safetynet.alerts.safetynetalertsservice.controller.MedicalRecordsController;
+import com.safetynet.alerts.safetynetalertsservice.model.MedicalRecord;
 import com.safetynet.alerts.safetynetalertsservice.model.exception.OldMedicalRecordNotFoundException;
 import com.safetynet.alerts.safetynetalertsservice.service.medicalrecord.interfaces.MedicalRecordService;
 import org.junit.jupiter.api.Test;
@@ -36,7 +37,7 @@ public class MedicalRecordDeleteControllerTest {
 
     @Test
     void deleteMedicalRecord_ShouldReturn404_IfNotFound() throws Exception {
-        BDDMockito.doThrow(OldMedicalRecordNotFoundException.class).when(service).deleteMedicalRecord("Unknown","Unknown");
+        BDDMockito.doThrow(OldMedicalRecordNotFoundException.class).when(service).deleteMedicalRecord(new MedicalRecord.Id("Unknown","Unknown"));
         mockMvc.perform(delete("/medicalRecord/{firstName}/{lastName}","Unknown","Unknown")).andExpect(status().isNotFound());
     }
 }

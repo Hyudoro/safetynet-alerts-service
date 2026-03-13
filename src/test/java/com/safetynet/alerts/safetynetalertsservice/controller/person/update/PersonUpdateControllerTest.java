@@ -35,7 +35,7 @@ public class PersonUpdateControllerTest {
                 "555-123-4567",
                 "homer.simpson@email.com"
         );
-        BDDMockito.doNothing().when(service).updatePerson(anyString(), anyString(), any());
+        BDDMockito.doNothing().when(service).updatePerson(any(), any());
         mockMvc.perform(patch("/person/{lastName}/{firstName}", "Doe", "John")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request))).andExpect(status().isNoContent());
@@ -50,7 +50,7 @@ public class PersonUpdateControllerTest {
                 "555-123-4567",
                 "homer.simpson@email.com"
         );
-        BDDMockito.doThrow(OldPersonNotFoundException.class).when(service).updatePerson(anyString(), anyString(), any());
+        BDDMockito.doThrow(OldPersonNotFoundException.class).when(service).updatePerson(any(), any());
         mockMvc.perform(patch("/person/{lastName}/{firstName}", "Doe", "John")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
@@ -65,7 +65,7 @@ public class PersonUpdateControllerTest {
                 "    ",
                 " ",
                 "");
-        BDDMockito.doNothing().when(service).updatePerson(anyString(), anyString(), any());
+        BDDMockito.doNothing().when(service).updatePerson(any(), any());
         mockMvc.perform(patch("/person/{lastName}/{firstName}", "Doe","John")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)));

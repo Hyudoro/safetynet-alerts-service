@@ -59,7 +59,7 @@ public class DeletePersonCommandImplTest {
             assertTrue(newData.persons().isEmpty());
             return null;
         }).when(repository).update(any());
-    service.deletePerson("Doe","John");
+    service.deletePerson(new Person.FullName("Doe","John"));
     }
 
     @Test
@@ -69,7 +69,7 @@ public class DeletePersonCommandImplTest {
           return lambda.apply(new DataWrapper(List.of(),List.of(),List.of()));
        }).when(repository).update(any());
 
-       assertThatThrownBy(() -> service.deletePerson("Doe","John")).isInstanceOf(
+       assertThatThrownBy(() -> service.deletePerson(new Person.FullName("Doe","John"))).isInstanceOf(
                OldPersonNotFoundException.class
        );
     }

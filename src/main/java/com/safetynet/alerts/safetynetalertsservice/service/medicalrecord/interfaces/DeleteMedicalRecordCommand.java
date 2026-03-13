@@ -1,7 +1,7 @@
 package com.safetynet.alerts.safetynetalertsservice.service.medicalrecord.interfaces;
 
-
+import com.safetynet.alerts.safetynetalertsservice.model.MedicalRecord;
 
 public interface DeleteMedicalRecordCommand {
-    void execute(String lastName, String firstName);
+    void execute(MedicalRecord.Id id);
 }

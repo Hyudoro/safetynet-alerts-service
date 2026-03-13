@@ -26,7 +26,7 @@ public class PersonController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePerson(@RequestParam @NotBlank String lastName, @RequestParam @NotBlank String firstName){
         logger.info("Deleting Person mapping lastname = {} firstname = {}", lastName, firstName);
-        service.deletePerson(lastName, firstName);
+        service.deletePerson(new Person.FullName(lastName, firstName));
     }
 
     @PostMapping
@@ -61,6 +61,6 @@ public class PersonController {
                 newData.phone(),
                 newData.email()
         );
-        service.updatePerson(lastName, firstName, person);
+        service.updatePerson(new Person.FullName(lastName, firstName), person);
     }
 }

@@ -2,6 +2,7 @@ package com.safetynet.alerts.safetynetalertsservice.controller.medicalrecord.upd
 
 
 import com.safetynet.alerts.safetynetalertsservice.controller.MedicalRecordsController;
+import com.safetynet.alerts.safetynetalertsservice.model.MedicalRecord;
 import com.safetynet.alerts.safetynetalertsservice.model.exception.OldMedicalRecordNotFoundException;
 import com.safetynet.alerts.safetynetalertsservice.service.medicalrecord.interfaces.MedicalRecordService;
 import org.junit.jupiter.api.Test;
@@ -37,7 +38,7 @@ public class MedicalRecordUpdateAllergiesControllerTest {
     void updateMedicalRecordAllergies_ShouldReturn404() throws Exception {
         BDDMockito.doThrow(OldMedicalRecordNotFoundException.class)
                 .when(service)
-                .updateAllergyMedicalRecord("Jean","mark",new ArrayList<>(List.of("butter","peach")));
+                .updateAllergyMedicalRecord(new MedicalRecord.Id("Jean","mark"),new ArrayList<>(List.of("butter","peach")));
         List<String> allergies = new ArrayList<>(List.of("butter","peach"));
         mockMvc.perform(put("/medicalRecord/{firstName}/{lastName}/allergies","Jean","mark")
                 .contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(allergies)))

@@ -22,36 +22,36 @@ public class UpdateMedicalRecordCommandImpl implements UpdateMedicalRecordComman
     }
 
     @Override
-    public void executeUpdatingMedication(String firstName, String lastName, List<String> medication) {
+    public void executeUpdatingMedication(MedicalRecord.Id id, List<String> medication) {
         repository.update(oldData -> {
             Set<MedicalRecord> currentData = new HashSet<>(oldData.medicalRecords());
 
             currentData.stream()
-                    .filter(mr -> mr.lastName().equals(lastName) && mr.firstName().equals(firstName))
+                    .filter(mr -> mr.firstName().equals(id.firstName()) && mr.lastName().equals(id.lastName()))
                     .findFirst()
                     .ifPresentOrElse(mr -> {
                                 mr.medications().clear();
                                 mr.medications().addAll(medication);
                             },
-                            () -> { throw new OldMedicalRecordNotFoundException(lastName, firstName); });
+                            () -> { throw new OldMedicalRecordNotFoundException(id.lastName(), id.firstName()); });
 
             return new DataWrapper(oldData.persons(), oldData.fireStations(), List.copyOf(currentData));
         });
     }
 
     @Override
-    public void executeUpdatingAllergy(String firstName, String lastName, List<String> allergy) {
+    public void executeUpdatingAllergy(MedicalRecord.Id id, List<String> allergy) {
         repository.update(oldData -> {
             Set<MedicalRecord> currentData = new HashSet<>(oldData.medicalRecords());
 
             currentData.stream()
-                    .filter(mr -> mr.lastName().equals(lastName) && mr.firstName().equals(firstName))
+                    .filter(mr -> mr.firstName().equals(id.firstName()) && mr.lastName().equals(id.lastName()))
                     .findFirst()
                     .ifPresentOrElse(mr -> {
                                 mr.allergies().clear();
                                 mr.allergies().addAll(allergy);
                             },
-                            () -> { throw new OldMedicalRecordNotFoundException(lastName, firstName); });
+                            () -> { throw new OldMedicalRecordNotFoundException(id.lastName(), id.firstName()); });
 
             return new DataWrapper(oldData.persons(), oldData.fireStations(), List.copyOf(currentData));
         });

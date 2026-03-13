@@ -22,16 +22,16 @@ public class DeleteMedicalRecordCommandImpl implements DeleteMedicalRecordComman
     }
 
     @Override
-    public void execute(String lastName, String firstName) {
+    public void execute(MedicalRecord.Id id) {
         repository.update(oldData -> { //possible optimization (if I have time : theme : key projection)
             Set<MedicalRecord> oldMedicalRecords = new HashSet<>(oldData.medicalRecords());
             boolean removed = oldMedicalRecords.removeIf(medicalRecord ->
-                    medicalRecord.firstName().equals(firstName) &&
-                    medicalRecord.lastName().equals(lastName)
+                    medicalRecord.firstName().equals(id.firstName()) &&
+                    medicalRecord.lastName().equals(id.lastName())
             );
 
             if (!removed) {
-                throw new OldMedicalRecordNotFoundException(lastName, firstName);
+                throw new OldMedicalRecordNotFoundException(id.lastName(), id.firstName());
             }
             
             return new DataWrapper(oldData.persons(),oldData.fireStations(),List.copyOf(oldMedicalRecords));

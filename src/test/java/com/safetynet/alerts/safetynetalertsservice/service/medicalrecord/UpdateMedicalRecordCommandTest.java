@@ -61,7 +61,7 @@ public class UpdateMedicalRecordCommandTest {
         return null;
     }).when(dataRepository).update(any());
 
-    service.updateMedicationMedicalRecord("George","Monte", new ArrayList<>(List.of("anzol:300mg", "paracetamol:200mg")));
+    service.updateMedicationMedicalRecord(new MedicalRecord.Id("George","Monte"), new ArrayList<>(List.of("anzol:300mg", "paracetamol:200mg")));
 
     }
 
@@ -73,7 +73,7 @@ public class UpdateMedicalRecordCommandTest {
         }).when(dataRepository).update(any());
 
         assertThrows(OldMedicalRecordNotFoundException.class, () -> service.updateMedicationMedicalRecord(
-                "monte","George", new ArrayList<>(List.of("anzol:300mg", "paracetamol:200mg"))));
+                new MedicalRecord.Id("monte","George"), new ArrayList<>(List.of("anzol:300mg", "paracetamol:200mg"))));
     }
 
     @Test
@@ -97,7 +97,7 @@ public class UpdateMedicalRecordCommandTest {
             return null;
         }).when(dataRepository).update(any());
 
-        service.updateAllergyMedicalRecord("George","Monte", new ArrayList<>(List.of("ananas")));
+        service.updateAllergyMedicalRecord(new MedicalRecord.Id("George","Monte"), new ArrayList<>(List.of("ananas")));
 
     }
 
@@ -109,7 +109,7 @@ public class UpdateMedicalRecordCommandTest {
         }).when(dataRepository).update(any());
 
         assertThrows(OldMedicalRecordNotFoundException.class, () -> service.updateAllergyMedicalRecord(
-                "monte","George", new ArrayList<>(List.of("ananas"))));
+                new MedicalRecord.Id("monte","George"), new ArrayList<>(List.of("ananas"))));
     }
 
 }

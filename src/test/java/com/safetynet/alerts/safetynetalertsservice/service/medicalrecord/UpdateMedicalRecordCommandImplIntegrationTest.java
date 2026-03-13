@@ -41,7 +41,7 @@ public class UpdateMedicalRecordCommandImplIntegrationTest {
 
     @Test
     void shouldUpdateMedicalRecordMedicationIntegrationTest(){
-        service.updateMedicationMedicalRecord("Lily","Cooper", new ArrayList<>(List.of("paracetamol:300mg")));
+        service.updateMedicationMedicalRecord(new MedicalRecord.Id("Lily","Cooper"), new ArrayList<>(List.of("paracetamol:300mg")));
         MedicalRecord updatedMedicalRecord = repository.findAllMedicalRecords()
                 .stream()
                 .filter(mR -> mR.lastName().equals("Cooper") && mR.firstName().equals("Lily"))
@@ -52,7 +52,7 @@ public class UpdateMedicalRecordCommandImplIntegrationTest {
 
     @Test
     void shouldUpdateMedicalRecordAllergyIntegrationTest(){
-        service.updateAllergyMedicalRecord("Lily","Cooper", new ArrayList<>(List.of("butter")));
+        service.updateAllergyMedicalRecord(new MedicalRecord.Id("Lily","Cooper"), new ArrayList<>(List.of("butter")));
         MedicalRecord updatedMedicalRecord = repository.findAllMedicalRecords()
                 .stream()
                 .filter(mR -> mR.lastName().equals("Cooper") && mR.firstName().equals("Lily"))
@@ -64,14 +64,14 @@ public class UpdateMedicalRecordCommandImplIntegrationTest {
     @Test
     void shouldReturnRuntimeExceptionIfMedicalRecordNotFoundUpdatingMedicationIntegrationTest(){
         assertThatThrownBy(()-> service.updateMedicationMedicalRecord(
-                "Lenon","Jhon",new ArrayList<>(List.of("paracetamol:300mg"))))
+                new MedicalRecord.Id("Lenon","Jhon"),new ArrayList<>(List.of("paracetamol:300mg"))))
                             .isInstanceOf(OldMedicalRecordNotFoundException.class);
     }
 
     @Test
     void shouldReturnRuntimeExceptionIfMedicalRecordNotFoundUpdatingAllergyIntegrationTest(){
         assertThatThrownBy(()-> service.updateAllergyMedicalRecord(
-                "Lenon","Jhon",new ArrayList<>(List.of("butter"))))
+                new MedicalRecord.Id("Lenon","Jhon"),new ArrayList<>(List.of("butter"))))
                 .isInstanceOf(OldMedicalRecordNotFoundException.class);
     }
 

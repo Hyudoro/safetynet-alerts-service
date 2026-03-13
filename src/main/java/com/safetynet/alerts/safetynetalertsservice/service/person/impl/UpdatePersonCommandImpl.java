@@ -21,19 +21,19 @@ public class UpdatePersonCommandImpl implements UpdatePersonCommand {
     }
 
     @Override
-    public void execute(String lastName, String firstName, Person person) {
+    public void execute(Person.FullName id, Person person) {
         repository.update(oldData -> {
             List<Person> currentData = new ArrayList<>(oldData.persons());
             int pos = -1;
             for (int iterator = 0; iterator < currentData.size(); iterator++) {
                 Person p = currentData.get(iterator);
-                if (p.firstName().equals(firstName) && p.lastName().equals(lastName)) {
+                if (p.firstName().equals(id.firstName()) && p.lastName().equals(id.lastName())) {
                     pos = iterator;
                     break;
                 }
             }
             if (pos == -1) {
-                throw new OldPersonNotFoundException(lastName, firstName);
+                throw new OldPersonNotFoundException(id.lastName(), id.firstName());
             }
             currentData.set(pos, person);
             return new DataWrapper(currentData, List.of(), List.of());

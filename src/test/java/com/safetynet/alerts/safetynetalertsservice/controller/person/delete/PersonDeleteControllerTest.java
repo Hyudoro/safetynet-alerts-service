@@ -30,7 +30,7 @@ public class PersonDeleteControllerTest {
 
     @Test
     void deletePerson_ShouldReturn404() throws Exception {
-        BDDMockito.doThrow(OldPersonNotFoundException.class).when(service).deletePerson(any(), any());
+        BDDMockito.doThrow(OldPersonNotFoundException.class).when(service).deletePerson(any());
         mockMvc.perform(delete("/person").param("lastName","Unknown").param("firstName","Unknown")).andExpect(status().isNotFound());
     }
 
