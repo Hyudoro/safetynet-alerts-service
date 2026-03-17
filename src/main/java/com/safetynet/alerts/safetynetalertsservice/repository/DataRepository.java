@@ -1,5 +1,4 @@
 package com.safetynet.alerts.safetynetalertsservice.repository;
-import com.safetynet.alerts.safetynetalertsservice.repository.DataWrapper;
 import com.safetynet.alerts.safetynetalertsservice.model.FireStation;
 import com.safetynet.alerts.safetynetalertsservice.model.MedicalRecord;
 import com.safetynet.alerts.safetynetalertsservice.model.Person;
@@ -12,4 +11,5 @@ public interface DataRepository {
     List<FireStation> findAllFireStations();
     List<MedicalRecord> findAllMedicalRecords();
     void update(UnaryOperator<DataWrapper> updateWrapper);
+    void persist(DataWrapper dataWrapper);
 }

@@ -51,8 +51,7 @@ public class ChildrenAlertServiceImpl implements ChildrenAlertService {
         for(ChildDTO child : children){
             List<HouseHoldMemberDTO> houseHoldMembers = new ArrayList<>();
             for(Person p : personsAtAddress){
-                if(child.lastName().equals(p.lastName())
-                        && !child.firstName().equals(p.firstName())){
+                if(child.lastName().equals(p.lastName()) && !child.firstName().equals(p.firstName())){
                     HouseHoldMemberDTO houseHoldMemberDTO = new HouseHoldMemberDTO(
                                                                                     p.lastName(),
                                                                                     p.firstName(),
