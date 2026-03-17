@@ -1,14 +1,12 @@
 package com.safetynet.alerts.safetynetalertsservice.repository;
 
-import tools.jackson.databind.ObjectMapper;
-import com.safetynet.alerts.safetynetalertsservice.repository.DataWrapper;
 import com.safetynet.alerts.safetynetalertsservice.model.FireStation;
 import com.safetynet.alerts.safetynetalertsservice.model.MedicalRecord;
 import com.safetynet.alerts.safetynetalertsservice.model.Person;
-
 import com.safetynet.alerts.safetynetalertsservice.util.Deduplicator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
+import tools.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +17,7 @@ import java.util.List;
 import java.util.function.UnaryOperator;
 @Repository
 public class JsonDataRepository implements DataRepository {
-    //making sure every threads see the latest version of currentData.
+            //making sure every threads see the latest version of currentData.
     protected volatile DataWrapper currentData;
     private final ObjectMapper objectMapper;
     private final Path dataPath;
@@ -41,7 +39,6 @@ public class JsonDataRepository implements DataRepository {
                 this.currentData = load(iS);
                 // Create directories if needed
                 Files.createDirectories(dataPath.getParent());
-                // Persist initial copy
                 persist(this.currentData);
             }
         }
@@ -50,7 +47,7 @@ public class JsonDataRepository implements DataRepository {
     protected DataWrapper load(InputStream is) throws IOException {
         DataWrapper loaded = objectMapper.readValue(is, DataWrapper.class);
 
-        return new DataWrapper( //If the seed JSON has duplicates, it sends a warning
+        return new DataWrapper( //If the JSON seed has duplicates, it sends a warning
                 Deduplicator.deduplicate(loaded.persons(), "persons"),
                 Deduplicator.deduplicate(loaded.fireStations(), "fireStations"),
                 Deduplicator.deduplicate(loaded.medicalRecords(), "medicalRecords")
@@ -72,6 +69,7 @@ public class JsonDataRepository implements DataRepository {
         return currentData.medicalRecords();
     }
 
+    @Override
     public synchronized void update(UnaryOperator<DataWrapper> updateWrapper) {
         DataWrapper oldData = currentData;
         DataWrapper newData = updateWrapper.apply(oldData);
@@ -79,7 +77,7 @@ public class JsonDataRepository implements DataRepository {
         persist(newData);
     }
 
-    protected void persist(DataWrapper data) {
+    public void persist(DataWrapper data) {
         objectMapper.writerWithDefaultPrettyPrinter().writeValue(dataPath.toFile(), data);
     }
 }

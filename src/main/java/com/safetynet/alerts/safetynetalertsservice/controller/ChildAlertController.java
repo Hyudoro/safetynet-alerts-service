@@ -2,15 +2,14 @@ package com.safetynet.alerts.safetynetalertsservice.controller;
 
 
 import com.safetynet.alerts.safetynetalertsservice.dto.responses.childalert.ChildrenAlertResponseDTO;
-import com.safetynet.alerts.safetynetalertsservice.service.childalert.impl.ChildrenAlertServiceImpl;
 import com.safetynet.alerts.safetynetalertsservice.service.childalert.interfaces.ChildrenAlertService;
 import jakarta.validation.constraints.NotBlank;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /*
   Domain assumption here :
@@ -25,7 +24,7 @@ public class ChildAlertController {
     private final Logger logger = LogManager.getLogger(ChildAlertController.class);
     private final ChildrenAlertService service;
 
-    public ChildAlertController(ChildrenAlertServiceImpl service) {
+    public ChildAlertController(ChildrenAlertService service) {
         this.service = service;
     }
 
