@@ -3,7 +3,6 @@ package com.safetynet.alerts.safetynetalertsservice.service.personInfo.impl;
 import com.safetynet.alerts.safetynetalertsservice.dto.responses.personinfo.PersonInfoDTO;
 import com.safetynet.alerts.safetynetalertsservice.dto.responses.personinfo.PersonInfoResponseDTO;
 import com.safetynet.alerts.safetynetalertsservice.model.MedicalRecord;
-import com.safetynet.alerts.safetynetalertsservice.model.Person;
 import com.safetynet.alerts.safetynetalertsservice.repository.DataRepository;
 import com.safetynet.alerts.safetynetalertsservice.service.personInfo.interfaces.PersonInfoService;
 import com.safetynet.alerts.safetynetalertsservice.util.AgeCalculator;
@@ -21,6 +20,14 @@ public class PersonInfoServiceImpl implements PersonInfoService {
         this.repository = repository;
     }
 
+    /**
+     * Returns personal and medical information for every person sharing {@code lastName}.
+     * Medical records are pre-filtered by last name before building the lookup map,
+     * so only relevant entries are kept in memory during the person-enrichment step.
+     *
+     * @param lastName the last name to search for (case-sensitive)
+     * @return a response containing one {@link PersonInfoDTO} per matching person
+     */
     @Override
     public PersonInfoResponseDTO getPersonInfo(String lastName) {
         Map<MedicalRecord.Id, MedicalRecord.MedicalHistory> PersonMeds =

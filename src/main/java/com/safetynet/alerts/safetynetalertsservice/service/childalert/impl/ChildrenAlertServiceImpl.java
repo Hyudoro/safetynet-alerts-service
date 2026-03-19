@@ -13,6 +13,11 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 
 import java.util.List;
+
+/**
+ * Returns the list of children living at a given address together with
+ * the other household members who share the same last name.
+ */
 @Service
 public class ChildrenAlertServiceImpl implements ChildrenAlertService {
     private final DataRepository repository;
@@ -21,6 +26,19 @@ public class ChildrenAlertServiceImpl implements ChildrenAlertService {
         this.repository = repository;
     }
 
+    /**
+     * Returns all children at {@code address} paired with their household members
+     * First pass filter persons at the address who have a medical record, then
+     * collect those whose calculated age is below 18 into {@code children}.
+     * If no children are found, return an empty response immediately.
+     * Second pass for each child, scan the same person list for anyone sharing
+     * the same last name but a different first name.
+     *
+     *
+     * @param address the street address to query
+     * @return a response containing each child with their household members,
+     *         or an empty list if no child lives at that address
+     */
     @Override
     public ChildrenAlertResponseDTO getChildrenAndTheirHouseHoldMembersByAddress(String address) {
         List<Person> personsAtAddress = repository.findAllPersons().stream()

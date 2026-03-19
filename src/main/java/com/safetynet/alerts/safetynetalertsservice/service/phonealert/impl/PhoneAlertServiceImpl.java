@@ -23,6 +23,17 @@ public class PhoneAlertServiceImpl implements PhoneAlertService {
         this.repository = repository;
     }
 
+    /**
+     * Returns the phone numbers of every person living at an address covered by {@code stationNumber}.
+     *
+     * The station number is first resolved to its set of addresses; if no address is mapped
+     * to that station a {@link MappingWithStationNotFoundException} is thrown rather than
+     * returning an empty list, so callers can distinguish "station unknown" from "no residents".
+     *
+     * @param stationNumber the fire-station number to query
+     * @return a response containing one {@link PersonPhoneDTO} per resident
+     * @throws MappingWithStationNotFoundException if no address is mapped to {@code stationNumber}
+     */
     @Override
     public PhoneAlertResponseDTO getPhonesByStation(String stationNumber) throws IllegalArgumentException {
         List<PersonPhoneDTO> personPhoneDTO = new ArrayList<>();

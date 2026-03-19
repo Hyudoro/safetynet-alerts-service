@@ -20,6 +20,14 @@ public class UpdatePersonCommandImpl implements UpdatePersonCommand {
         this.repository = repository;
     }
 
+    /**
+     * Replaces the person identified by {@code id} with {@code person} in-place,
+     * preserving the list order via index-based {@code set()}.
+     *
+     * @param id the (firstName,lastName) key identifying the person to replace
+     * @param person the new person data (may carry a different address, phone, etc.)
+     * @throws OldPersonNotFoundException if no person with {@code id} exists
+     */
     @Override
     public void execute(Person.FullName id, Person person) {
         repository.update(oldData -> {

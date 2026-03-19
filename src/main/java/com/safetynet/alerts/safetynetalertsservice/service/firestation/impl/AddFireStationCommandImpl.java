@@ -20,6 +20,15 @@ public class AddFireStationCommandImpl implements AddFireStationCommand {
         this.repo = repo;
     }
 
+    /**
+     * Adds a new address-to-station mapping to the repository.
+     *
+     * The check is intentionally non-idempotent: adding an exact duplicate
+     * (same address AND same station) throws {@link DuplicateFireStationMappingException}
+     *
+     * @param fs the fire-station mapping to add
+     * @throws DuplicateFireStationMappingException if the exact address+station pair already exists
+     */
     @Override
     public void execute(FireStation fs) {
         repo.update(oldData -> {

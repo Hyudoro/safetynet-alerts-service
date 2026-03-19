@@ -18,6 +18,17 @@ public class UpdateFireStationCommandImpl implements UpdateFireStationCommand {
         this.repo = repo;
     }
 
+    /**
+     * Replaces {@code oldFireStation} with a new mapping pointing the same address
+     * to {@code newStationNumber}.
+     *
+     * {@link LinkedHashSet} is used to preserve the insertion order of fire stations
+     * in the persisted JSON. Throws if the old mapping is not found.
+     *
+     * @param oldFireStation   the existing mapping to replace (matched by address+station equality)
+     * @param newStationNumber the replacement station number
+     * @throws OldFireStationNotFoundException if {@code oldFireStation} does not exist
+     */
     @Override
     public void execute(FireStation oldFireStation, Integer newStationNumber) {
         repo.update(oldData -> {

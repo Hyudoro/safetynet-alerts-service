@@ -14,6 +14,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+/**
+ * Aggregates household-level medical information for all addresses covered by one or more
+ * fire stations, used by the emergency flood-alert endpoint.
+ */
 @Service
 public class FloodServiceImpl implements FloodService {
     private final DataRepository repository;
@@ -22,6 +27,20 @@ public class FloodServiceImpl implements FloodService {
         this.repository = repository;
     }
 
+    /**
+     * Returns households grouped by address for all addresses covered by any of the given stations.
+     *
+     * <p>Algorithm:
+     * <ol>
+     *   <li>Collect the set of addresses mapped to any station in {@code stations}.</li>
+     *   <li>Filter persons living at those addresses.</li>
+     *   <li>Pre-build a {@code MedicalRecord.Id → MedicalHistory} map to avoid per-person lookups.</li>
+     *   <li>Group the enriched residents by address into {@link HouseholdDTO} entries.</li>
+     * </ol>
+     *
+     * @param stations list of station numbers to include; may contain multiple stations
+     * @return a {@link FloodResponseDTO} with one {@link HouseholdDTO} per affected address
+     */
     @Override
     public FloodResponseDTO getHouseHoldsUnderStations(List<String> stations) {
 Set<String> addresses = repository.findAllFireStations().stream()

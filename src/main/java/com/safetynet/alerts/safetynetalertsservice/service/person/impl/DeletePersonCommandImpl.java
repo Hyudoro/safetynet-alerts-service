@@ -19,6 +19,12 @@ public class DeletePersonCommandImpl implements DeletePersonCommand {
         this.repository = repository;
     }
 
+    /**
+     * Removes the person identified by {@code id} (firstName,lastName) from the repository.
+     *
+     * @param id the firstName+lastName key identifying the person to delete
+     * @throws OldPersonNotFoundException if no person with {@code id} exists
+     */
     @Override
     public void execute(Person.FullName id) {
         repository.update(oldData -> {

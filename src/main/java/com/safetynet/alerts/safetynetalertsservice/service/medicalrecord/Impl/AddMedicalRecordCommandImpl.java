@@ -20,6 +20,15 @@ public class AddMedicalRecordCommandImpl implements AddMedicalRecordCommand {
     }
 
 
+    /**
+     * Adds a new medical record to the repository.
+     *
+     * Identity is determined by the (firstName,lastName) pair. Adding a record whose
+     * full name already exists throws {@link DuplicateMedicalRecordMappingException}.
+     *
+     * @param mR the medical record to add
+     * @throws DuplicateMedicalRecordMappingException if a record with the same firstName+lastName already exists
+     */
     @Override
     public void execute(MedicalRecord mR) {
         repository.update(oldData ->{
