@@ -7,6 +7,10 @@ import com.safetynet.alerts.safetynetalertsservice.model.FireStation;
 import com.safetynet.alerts.safetynetalertsservice.service.firestation.interfaces.*;
 import org.springframework.stereotype.Service;
 
+/**
+ * Command-pattern façade that routes all fire-station CRUD and query operations
+ * to their dedicated command implementations.
+ */
 @Service
 public class FireStationServiceImpl implements FireStationService {
 

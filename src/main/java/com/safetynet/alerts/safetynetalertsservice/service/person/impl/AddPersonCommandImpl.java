@@ -18,6 +18,15 @@ public class AddPersonCommandImpl implements AddPersonCommand {
         this.repository = repository;
     }
 
+    /**
+     * Adds a new person to the repository.
+     *
+     * Identity is determined by the (firstName,lastName pair). Adding a person whose
+     * full name already exists throws {@link DuplicatePersonMappingException}.
+     *
+     * @param person the person to add
+     * @throws DuplicatePersonMappingException if a person with the same (firstName,lastName) already exists
+     */
     @Override
     public void execute(Person person) {
         repository.update(oldData -> {

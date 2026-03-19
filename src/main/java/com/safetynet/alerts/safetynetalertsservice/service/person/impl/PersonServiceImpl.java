@@ -7,6 +7,10 @@ import com.safetynet.alerts.safetynetalertsservice.service.person.interfaces.Per
 import com.safetynet.alerts.safetynetalertsservice.service.person.interfaces.UpdatePersonCommand;
 import org.springframework.stereotype.Service;
 
+/**
+ * Command-pattern façade that routes all person CRUD operations
+ * to their dedicated command implementations.
+ */
 @Service
 public class PersonServiceImpl implements PersonService {
     private final AddPersonCommand  addPersonCommand;

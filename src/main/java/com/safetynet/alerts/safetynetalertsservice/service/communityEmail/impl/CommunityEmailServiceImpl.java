@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Collects the email addresses of every person registered in the given city.
+ */
 @Service
 public class CommunityEmailServiceImpl implements CommunityEmailService {
     private final DataRepository repository;
@@ -17,6 +20,12 @@ public class CommunityEmailServiceImpl implements CommunityEmailService {
         this.repository = repository;
     }
 
+    /**
+     * Returns the email addresses of all persons whose registered city equals {@code city}.
+     *
+     * @param city the city name to filter on (case-sensitive)
+     * @return a response containing the matching email addresses
+     */
     @Override
     public CommunityEmailResponseDTO getCommunityEmail(String city) {
         List<String> Emails = repository.findAllPersons().stream().

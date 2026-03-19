@@ -23,6 +23,12 @@ public class DeleteFireStationCommandImpl implements DeleteFireStationCommand {
         this.dataRepository = dataRepository;
     }
 
+    /**
+     * Removes all fire-station mappings whose address equals {@code address}.
+     *
+     * @param address the address whose mappings should be deleted
+     * @throws MappingWithAddressNotFoundException if no mapping exists for {@code address}
+     */
     @Override
     public void executeByAddress(String address) {
         dataRepository.update(oldData -> {
@@ -37,6 +43,12 @@ public class DeleteFireStationCommandImpl implements DeleteFireStationCommand {
         });
     }
 
+    /**
+     * Removes all fire-station mappings whose station number equals {@code station}.
+     *
+     * @param station the station number whose mappings should be deleted
+     * @throws MappingWithStationNotFoundException if no mapping exists for {@code station}
+     */
     @Override
     public void executeByStation(String station) {
         dataRepository.update(oldData -> {
@@ -51,6 +63,12 @@ public class DeleteFireStationCommandImpl implements DeleteFireStationCommand {
         });
     }
 
+    /**
+     * Removes the exact address+station mapping identified by {@code fireStation}.
+     *
+     * @param fireStation the exact mapping to delete (matched by address+station equality)
+     * @throws MappingWithStationAndAddressNotFoundException if the mapping does not exist
+     */
     @Override
     public void executeByFireStation(FireStation fireStation) {
         dataRepository.update(oldData -> {

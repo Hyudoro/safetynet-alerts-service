@@ -21,6 +21,19 @@ public class ReadFireStationCommandImpl implements ReadFireStationCommand {
         this.repository = repository;
     }
 
+    /**
+     * Returns all persons living at addresses covered by {@code stationNumber} together with
+     * an adult/child head-count derived from their medical records.
+     *
+     * If no address is mapped to the station an empty response (zero residents, zero counts)
+     * is returned rather than an error. For each matched person the medical record is looked up
+     * by firstName+lastName; an {@link IllegalStateException} is thrown if it is missing, as
+     * that indicates corrupted data rather than a normal "not found" case.
+     *
+     * @param stationNumber the fire-station number to query
+     * @return a {@link FireStationResponseDTO} with resident list and adult/child counts
+     * @throws IllegalStateException if a covered person has no matching medical record
+     */
     @Override
     public FireStationResponseDTO getResidentsByStation(String stationNumber) {
         List<String> addresses = repository.findAllFireStations().stream()

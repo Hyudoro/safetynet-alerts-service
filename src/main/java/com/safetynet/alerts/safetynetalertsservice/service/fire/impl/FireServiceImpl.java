@@ -14,9 +14,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-// As seen in the data set, an address can be covered my multiple stations,
-// Even tho the specs insinuate quite the opposite,
-// I prefer Using List<String>, Worst case scenario : one element per list.
+/**
+ * Returns the medical details of every resident at a given address together with
+ * the fire-station number(s) covering that address.
+ * Design note: the response uses {@code List<String>} for station numbers because
+ * the data set shows that a single address can be covered by multiple stations,
+ * even though the spec implies a one-to-one mapping. The worst case is a one-element list.
+ */
 @Service
 public class FireServiceImpl implements FireService
 {
@@ -27,6 +31,16 @@ public class FireServiceImpl implements FireService
     }
 
 
+    /**
+     * Returns the medical summary of every resident at {@code address} plus the station
+     * number(s) covering that address.
+     *{@code MedicalRecord}.Id → MedicalHistory map is pre-built once from all medical
+     * records to avoid a nested lookup per person. Persons without a matching medical record
+     * are skipped.
+     *
+     * @param address the street address to query
+     * @return a {@link FireResponseDTO} containing resident medical details and station numbers
+     */
     @Override
     public FireResponseDTO getResidentMedicalByAddress(String address) {
         List<String> fireStationByAddress = repository.findAllFireStations().

@@ -15,6 +15,17 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.function.UnaryOperator;
+
+/**
+ * File-backed JSON repository that serves as the single source of truth for all domain data.
+ *
+ * <p>Thread safety: {@code currentData} is declared {@code volatile} so every thread always
+ * reads the latest reference after an update. Writes are further guarded by {@code synchronized}
+ * on {@link #update} to prevent lost updates under concurrent requests.
+ *
+ * Bootstrap logic: if the configured external file already exists it is loaded directly;
+ * otherwise the classpath seed {@code data.json} is copied to the external path.
+ */
 @Repository
 public class JsonDataRepository implements DataRepository {
             //making sure every threads see the latest version of currentData.
@@ -44,6 +55,14 @@ public class JsonDataRepository implements DataRepository {
         }
     }
 
+    /**
+     * Deserializes a {@link DataWrapper} from the given stream and strips any duplicates
+     * that may be present in the source JSON, logging a warning for each duplicate found.
+     *
+     * @param is the input stream containing the JSON payload
+     * @return a deduplicated {@link DataWrapper}
+     * @throws IOException if the stream cannot be read or parsed
+     */
     protected DataWrapper load(InputStream is) throws IOException {
         DataWrapper loaded = objectMapper.readValue(is, DataWrapper.class);
 
@@ -69,6 +88,15 @@ public class JsonDataRepository implements DataRepository {
         return currentData.medicalRecords();
     }
 
+    /**
+     * Atomically applies {@code updateWrapper} to the current snapshot and persists the result.
+     *
+     * <p>Synchronized to serialize concurrent writes; {@code volatile} ensures every subsequent
+     * read sees the new reference without stale-cache issues.
+     *
+     * @param updateWrapper a pure function that produces a new {@link DataWrapper} from the old one;
+     *                      any exception thrown inside will abort the update and leave the state unchanged
+     */
     @Override
     public synchronized void update(UnaryOperator<DataWrapper> updateWrapper) {
         DataWrapper oldData = currentData;
@@ -77,6 +105,12 @@ public class JsonDataRepository implements DataRepository {
         persist(newData);
     }
 
+    /**
+     * Writes {@code data} to the configured external file as pretty-printed JSON,
+     * overwriting any previous content.
+     *
+     * @param data the snapshot to persist
+     */
     public void persist(DataWrapper data) {
         objectMapper.writerWithDefaultPrettyPrinter().writeValue(dataPath.toFile(), data);
     }

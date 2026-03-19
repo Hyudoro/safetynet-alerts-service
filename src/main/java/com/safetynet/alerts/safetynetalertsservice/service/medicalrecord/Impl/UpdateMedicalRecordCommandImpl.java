@@ -21,6 +21,16 @@ public class UpdateMedicalRecordCommandImpl implements UpdateMedicalRecordComman
         this.repository = repository;
     }
 
+    /**
+     * Replaces the medication list of the record identified by {@code id}.
+     *
+     * The list is mutated in-place via {@code clear()} + {@code addAll()} so that
+     * any other references to the same list object also see the update.
+     *
+     * @param id the firstName+lastName key identifying the record to update
+     * @param medication the new medication list (replaces the existing one entirely)
+     * @throws OldMedicalRecordNotFoundException if no record with {@code id} exists
+     */
     @Override
     public void executeUpdatingMedication(MedicalRecord.Id id, List<String> medication) {
         repository.update(oldData -> {
@@ -39,6 +49,16 @@ public class UpdateMedicalRecordCommandImpl implements UpdateMedicalRecordComman
         });
     }
 
+    /**
+     * Replaces the allergy list of the record identified by {@code id}.
+     *
+     * The list is mutated in-place via {@code clear()} + {@code addAll()} so that
+     * any other references to the same list object also see the update.
+     *
+     * @param id      the firstName+lastName key identifying the record to update
+     * @param allergy the new allergy list (replaces the existing one entirely)
+     * @throws OldMedicalRecordNotFoundException if no record with {@code id} exists
+     */
     @Override
     public void executeUpdatingAllergy(MedicalRecord.Id id, List<String> allergy) {
         repository.update(oldData -> {

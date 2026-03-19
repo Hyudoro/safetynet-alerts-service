@@ -11,6 +11,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 
+/**
+ * Command-pattern façade that routes all medical-record CRUD operations
+ * to their dedicated command implementations.
+ */
 @Service
 public class MedicalRecordServiceImpl implements MedicalRecordService {
     private final AddMedicalRecordCommand addCommand;

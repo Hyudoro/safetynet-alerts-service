@@ -21,6 +21,12 @@ public class DeleteMedicalRecordCommandImpl implements DeleteMedicalRecordComman
         this.repository = repository;
     }
 
+    /**
+     * Removes the medical record identified by {@code id} (firstName+lastName) from the repository.
+     *
+     * @param id the firstName+lastName key identifying the record to delete
+     * @throws OldMedicalRecordNotFoundException if no record with {@code id} exists
+     */
     @Override
     public void execute(MedicalRecord.Id id) {
         repository.update(oldData -> { //possible optimization (if I have time : theme : key projection)
