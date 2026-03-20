@@ -8,6 +8,8 @@ import com.safetynet.alerts.safetynetalertsservice.model.Person;
 import com.safetynet.alerts.safetynetalertsservice.model.exception.MappingWithStationNotFoundException;
 import com.safetynet.alerts.safetynetalertsservice.repository.DataRepository;
 import com.safetynet.alerts.safetynetalertsservice.service.phonealert.interfaces.PhoneAlertService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class PhoneAlertServiceImpl implements PhoneAlertService {
+    private static final Logger logger = LogManager.getLogger(PhoneAlertServiceImpl.class);
     private final DataRepository repository;
 
     public PhoneAlertServiceImpl(DataRepository repository) {
@@ -42,7 +45,9 @@ public class PhoneAlertServiceImpl implements PhoneAlertService {
                 .map(FireStation::address)
                 .collect(Collectors.toSet());
 
+        logger.debug("{} addresses resolved for station={}: {}", addresses.size(), stationNumber, addresses);
         if (addresses.isEmpty()) {
+            logger.error("No address mapping found for station={}", stationNumber);
             throw new MappingWithStationNotFoundException(stationNumber);
         }
 

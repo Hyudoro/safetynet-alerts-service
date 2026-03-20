@@ -31,7 +31,9 @@ public class ChildAlertController {
     @GetMapping
     public ChildrenAlertResponseDTO getChildrenByAddress(@RequestParam @NotBlank String address){
         logger.info("Getting children by address = {} ", address);
-        return service.getChildrenAndTheirHouseHoldMembersByAddress(address);
+        ChildrenAlertResponseDTO response = service.getChildrenAndTheirHouseHoldMembersByAddress(address);
+        logger.info("Response: {} children found at address={}", response.childAndHouseHoldMembers().size(), address);
+        return response;
     }
 
 

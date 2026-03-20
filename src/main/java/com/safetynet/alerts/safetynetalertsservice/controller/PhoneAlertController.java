@@ -24,6 +24,8 @@ public class PhoneAlertController {
     @GetMapping
     public PhoneAlertResponseDTO getPhonesByStation(@RequestParam @NotBlank String firestation) {
         logger.info("Incoming request station= {}", firestation);
-        return service.getPhonesByStation(firestation);
+        PhoneAlertResponseDTO response = service.getPhonesByStation(firestation);
+        logger.info("Response: {} phones found for station={}", response.peoplePhoneNumber().size(), firestation);
+        return response;
     }
 }

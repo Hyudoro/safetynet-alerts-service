@@ -20,6 +20,8 @@ public class FireController {
     @GetMapping
     public FireResponseDTO getResidentMedicalByAddress(@RequestParam @NotBlank String address) {
         logger.info("Incoming request address = {}", address);
-        return service.getResidentMedicalByAddress(address);
+        FireResponseDTO response = service.getResidentMedicalByAddress(address);
+        logger.info("Response: {} residents found at address={}, stations={}", response.residents().size(), address, response.stationNumber());
+        return response;
     }
 }

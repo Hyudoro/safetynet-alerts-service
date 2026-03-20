@@ -5,6 +5,8 @@ import com.safetynet.alerts.safetynetalertsservice.model.Person;
 import com.safetynet.alerts.safetynetalertsservice.model.exception.DuplicatePersonMappingException;
 import com.safetynet.alerts.safetynetalertsservice.repository.DataRepository;
 import com.safetynet.alerts.safetynetalertsservice.service.person.interfaces.AddPersonCommand;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -13,6 +15,7 @@ import java.util.Set;
 
 @Service
 public class AddPersonCommandImpl implements AddPersonCommand {
+    private static final Logger logger = LogManager.getLogger(AddPersonCommandImpl.class);
     private final DataRepository repository;
     public AddPersonCommandImpl(DataRepository repository) {
         this.repository = repository;
@@ -29,11 +32,13 @@ public class AddPersonCommandImpl implements AddPersonCommand {
      */
     @Override
     public void execute(Person person) {
+        logger.debug("Attempting to add person lastName={} firstName={}", person.lastName(), person.firstName());
         repository.update(oldData -> {
             boolean alreadyExists = oldData.persons().stream().anyMatch(
                     pr -> pr.firstName().equals(person.firstName()) &&
                                   pr.lastName().equals(person.lastName()));
             if(alreadyExists){
+                logger.error("Duplicate person: lastName={} firstName={} already exists", person.lastName(), person.firstName());
                 throw new DuplicatePersonMappingException(person.lastName(), person.firstName());
             }
 

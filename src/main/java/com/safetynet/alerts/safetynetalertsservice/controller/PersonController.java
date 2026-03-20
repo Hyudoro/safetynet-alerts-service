@@ -6,8 +6,8 @@ import com.safetynet.alerts.safetynetalertsservice.model.Person;
 import com.safetynet.alerts.safetynetalertsservice.service.person.interfaces.PersonService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/person")
 public class PersonController {
-    private final Logger logger = LoggerFactory.getLogger(PersonController.class);
+    private final Logger logger = LogManager.getLogger(PersonController.class);
     private final PersonService service;
 
     public PersonController(PersonService service) {
@@ -27,6 +27,7 @@ public class PersonController {
     public void deletePerson(@RequestParam @NotBlank String lastName, @RequestParam @NotBlank String firstName){
         logger.info("Deleting Person mapping lastname = {} firstname = {}", lastName, firstName);
         service.deletePerson(new Person.FullName(lastName, firstName));
+        logger.info("Person deleted successfully lastName={} firstName={}", lastName, firstName);
     }
 
     @PostMapping
@@ -44,6 +45,7 @@ public class PersonController {
                 request.email()
         );
         service.addPerson(person);
+        logger.info("Person added successfully lastName={} firstName={}", request.lastName(), request.firstName());
     }
 
     @PatchMapping("/{lastName}/{firstName}")
@@ -62,5 +64,6 @@ public class PersonController {
                 newData.email()
         );
         service.updatePerson(new Person.FullName(lastName, firstName), person);
+        logger.info("Person updated successfully lastName={} firstName={}", lastName, firstName);
     }
 }

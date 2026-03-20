@@ -19,7 +19,9 @@ public class CommunityEmailController {
     @GetMapping
     public CommunityEmailResponseDTO getCommunityEmail(@RequestParam String city) {
         logger.info("Incoming request city = {} ", city);
-        return service.getCommunityEmail(city);
+        CommunityEmailResponseDTO response = service.getCommunityEmail(city);
+        logger.info("Response: {} emails found for city={}", response.emails().size(), city);
+        return response;
     }
 
 }

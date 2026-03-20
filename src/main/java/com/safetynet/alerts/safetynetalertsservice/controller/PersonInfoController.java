@@ -22,8 +22,10 @@ public class PersonInfoController {
     }
     @GetMapping
     public PersonInfoResponseDTO getPersonInfoDTOS(@RequestParam @NotBlank String lastName) {
-        logger.info("Incoming request to get person info with lastName = {}", lastName); //hmm
-        return service.getPersonInfo(lastName);
+        logger.info("Incoming request to get person info with lastName = {}", lastName);
+        PersonInfoResponseDTO response = service.getPersonInfo(lastName);
+        logger.info("Response: {} persons found for lastName={}", response.personInfoDTOS().size(), lastName);
+        return response;
     }
 
 }

@@ -5,6 +5,8 @@ import com.safetynet.alerts.safetynetalertsservice.model.FireStation;
 import com.safetynet.alerts.safetynetalertsservice.model.exception.OldFireStationNotFoundException;
 import com.safetynet.alerts.safetynetalertsservice.repository.DataRepository;
 import com.safetynet.alerts.safetynetalertsservice.service.firestation.interfaces.UpdateFireStationCommand;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.Set;
 
 @Service
 public class UpdateFireStationCommandImpl implements UpdateFireStationCommand {
+    private static final Logger logger = LogManager.getLogger(UpdateFireStationCommandImpl.class);
     private final DataRepository repo;
 
     public UpdateFireStationCommandImpl(DataRepository repo) {
@@ -31,6 +34,7 @@ public class UpdateFireStationCommandImpl implements UpdateFireStationCommand {
      */
     @Override
     public void execute(FireStation oldFireStation, Integer newStationNumber) {
+        logger.debug("Attempting to update firestation mapping address={} oldStation={} -> newStation={}", oldFireStation.address(), oldFireStation.station(), newStationNumber);
         repo.update(oldData -> {
             // Keep order with LinkedHashSet
             Set<FireStation> fireStations = new LinkedHashSet<>(oldData.fireStations());
@@ -39,6 +43,7 @@ public class UpdateFireStationCommandImpl implements UpdateFireStationCommand {
                 fireStations.remove(oldFireStation); // remove old mapping
                 fireStations.add(new FireStation(oldFireStation.address(), (newStationNumber).toString()));
             } else {
+                logger.error("Firestation mapping not found: address={} station={}", oldFireStation.address(), oldFireStation.station());
                 throw new OldFireStationNotFoundException(oldFireStation.address(), oldFireStation.station()
                 );
             }

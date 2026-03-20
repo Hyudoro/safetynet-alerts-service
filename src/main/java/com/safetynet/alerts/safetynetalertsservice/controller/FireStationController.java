@@ -38,6 +38,7 @@ public class FireStationController {
         logger.info("Adding fireStation mapping address={} station={}", request.address(), request.station());
         FireStation fireStation = new FireStation(request.address(), request.station());
         service.addFireStation(fireStation);
+        logger.info("FireStation mapping added successfully address={} station={}", request.address(), request.station());
     }
 
     @PatchMapping //this behavior works but Its probably not the right thing to do here.
@@ -48,6 +49,7 @@ public class FireStationController {
         FireStation oldFireStation = new FireStation(request.address(), request.oldStationNumber());
         Integer stationNumber = Integer.valueOf(request.newStationNumber());
         service.updateFireStation(oldFireStation, stationNumber);
+        logger.info("FireStation mapping updated successfully address={} newStation={}", request.address(), request.newStationNumber());
     }
 
     @DeleteMapping(params = "address")
@@ -55,6 +57,7 @@ public class FireStationController {
     public void deleteFireStationsByAddress(@RequestParam @NotBlank String address){
         logger.info("Deleting FireStation(s) covering address={}",address);
         service.deleteMappingsByAddress(address);
+        logger.info("FireStation(s) deleted successfully for address={}", address);
     }
 
     @DeleteMapping(params = "stationNumber")
@@ -62,6 +65,7 @@ public class FireStationController {
     public void deleteFireStationByStation(@RequestParam @NotBlank String stationNumber){
         logger.info("Deleting FireStation(s) with number ={}",stationNumber);
         service.deleteMappingsByStation(stationNumber);
+        logger.info("FireStation(s) deleted successfully for stationNumber={}", stationNumber);
     }
 
     @DeleteMapping(params = {"address", "stationNumber"})
@@ -70,6 +74,7 @@ public class FireStationController {
         logger.info("Deleting FireStation mapping address={} station={} ",address,stationNumber);
         FireStation fireStation = new FireStation(address, stationNumber);
         service.deleteMapping(fireStation);
+        logger.info("FireStation mapping deleted successfully address={} station={}", address, stationNumber);
     }
 
 }
