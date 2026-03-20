@@ -22,7 +22,6 @@ import java.util.function.UnaryOperator;
  * <p>Thread safety: {@code currentData} is declared {@code volatile} so every thread always
  * reads the latest reference after an update. Writes are further guarded by {@code synchronized}
  * on {@link #update} to prevent lost updates under concurrent requests.
- *
  * Bootstrap logic: if the configured external file already exists it is loaded directly;
  * otherwise the classpath seed {@code data.json} is copied to the external path.
  */
@@ -90,12 +89,10 @@ public class JsonDataRepository implements DataRepository {
 
     /**
      * Atomically applies {@code updateWrapper} to the current snapshot and persists the result.
-     *
-     * <p>Synchronized to serialize concurrent writes; {@code volatile} ensures every subsequent
+     * Synchronized to serialize concurrent writes; {@code volatile} ensures every subsequent
      * read sees the new reference without stale-cache issues.
-     *
      * @param updateWrapper a pure function that produces a new {@link DataWrapper} from the old one;
-     *                      any exception thrown inside will abort the update and leave the state unchanged
+     * any exception thrown inside will abort the update and leave the state unchanged
      */
     @Override
     public synchronized void update(UnaryOperator<DataWrapper> updateWrapper) {

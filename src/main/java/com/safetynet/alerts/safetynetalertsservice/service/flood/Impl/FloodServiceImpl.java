@@ -7,6 +7,8 @@ import com.safetynet.alerts.safetynetalertsservice.model.*;
 import com.safetynet.alerts.safetynetalertsservice.repository.DataRepository;
 import com.safetynet.alerts.safetynetalertsservice.service.flood.interfaces.FloodService;
 import com.safetynet.alerts.safetynetalertsservice.util.AgeCalculator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 
@@ -21,6 +23,7 @@ import java.util.stream.Collectors;
  */
 @Service
 public class FloodServiceImpl implements FloodService {
+    private static final Logger logger = LogManager.getLogger(FloodServiceImpl.class);
     private final DataRepository repository;
 
     public FloodServiceImpl(DataRepository repository) {
@@ -47,11 +50,12 @@ Set<String> addresses = repository.findAllFireStations().stream()
                 .filter(fS -> stations.contains(fS.station()))
                 .map(FireStation::address)
                 .collect(Collectors.toSet());
-
+        logger.debug("{} addresses resolved for stations={}: {}", addresses.size(), stations, addresses);
 
         List<Person> concernedPeople = repository.findAllPersons().stream().filter(
                 p -> addresses.contains(p.address())
                 ).toList();
+        logger.debug("{} persons concerned by stations={}", concernedPeople.size(), stations);
 
 
         Map<MedicalRecord.Id, MedicalRecord.MedicalHistory> meds = repository.findAllMedicalRecords().stream().collect(Collectors.toMap(
@@ -77,6 +81,7 @@ Set<String> addresses = repository.findAllFireStations().stream()
                         ));
         List<HouseholdDTO> households = floodResidents.entrySet().stream().
                 map(entry->new HouseholdDTO(entry.getKey(),entry.getValue())).toList();
+        logger.debug("{} households grouped for stations={}", households.size(), stations);
 
     return new  FloodResponseDTO(households);
     }

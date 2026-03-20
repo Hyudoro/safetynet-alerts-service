@@ -30,6 +30,7 @@ public class MedicalRecordsController {
         logger.info("Adding Medical Record mapping lastName ={} firstName = {}", request.lastName(), request.firstName());
         MedicalRecord medicalRecord = new MedicalRecord(request.firstName(), request.lastName(), request.birthDate(),request.medications(),request.allergies());
         service.addMedicalRecord(medicalRecord);
+        logger.info("Medical record added successfully for {} {}", request.firstName(), request.lastName());
     }
 
     @DeleteMapping("/{firstName}/{lastName}")
@@ -38,6 +39,7 @@ public class MedicalRecordsController {
     public void deleteMedicalRecord(@PathVariable @NotBlank String firstName, @PathVariable @NotBlank String lastName){
         logger.info("Deleting Medical Record mapping lastName ={} firstName = {}", lastName, firstName );
         service.deleteMedicalRecord(new MedicalRecord.Id(firstName, lastName));
+        logger.info("Medical record deleted successfully for {} {}", firstName, lastName);
     }
 
 
@@ -49,6 +51,7 @@ public class MedicalRecordsController {
     {
         logger.info("Updating medical record's allergies for {} {}", firstName, lastName);
         service.updateAllergyMedicalRecord(new MedicalRecord.Id(firstName, lastName), allergies);
+        logger.info("Allergies updated successfully for {} {}", firstName, lastName);
     }
 
     @PutMapping("/{firstName}/{lastName}/medications")
@@ -58,6 +61,7 @@ public class MedicalRecordsController {
     {
         logger.info("Updating medical record's medication for {} {}", firstName, lastName);
         service.updateMedicationMedicalRecord(new MedicalRecord.Id(firstName, lastName), medication);
+        logger.info("Medications updated successfully for {} {}", firstName, lastName);
     }
 
 

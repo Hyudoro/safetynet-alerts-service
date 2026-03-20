@@ -5,6 +5,8 @@ import com.safetynet.alerts.safetynetalertsservice.model.Person;
 import com.safetynet.alerts.safetynetalertsservice.model.exception.OldPersonNotFoundException;
 import com.safetynet.alerts.safetynetalertsservice.repository.DataRepository;
 import com.safetynet.alerts.safetynetalertsservice.service.person.interfaces.UpdatePersonCommand;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import java.util.List;
 
 @Service
 public class UpdatePersonCommandImpl implements UpdatePersonCommand {
+    private static final Logger logger = LogManager.getLogger(UpdatePersonCommandImpl.class);
     private final DataRepository repository;
 
     public UpdatePersonCommandImpl(DataRepository repository) {
@@ -30,6 +33,7 @@ public class UpdatePersonCommandImpl implements UpdatePersonCommand {
      */
     @Override
     public void execute(Person.FullName id, Person person) {
+        logger.debug("Attempting to update person lastName={} firstName={}", id.lastName(), id.firstName());
         repository.update(oldData -> {
             List<Person> currentData = new ArrayList<>(oldData.persons());
             int pos = -1;
@@ -41,6 +45,7 @@ public class UpdatePersonCommandImpl implements UpdatePersonCommand {
                 }
             }
             if (pos == -1) {
+                logger.error("Person not found for update: lastName={} firstName={}", id.lastName(), id.firstName());
                 throw new OldPersonNotFoundException(id.lastName(), id.firstName());
             }
             currentData.set(pos, person);

@@ -4,6 +4,8 @@ import com.safetynet.alerts.safetynetalertsservice.dto.responses.communityemail.
 import com.safetynet.alerts.safetynetalertsservice.model.Person;
 import com.safetynet.alerts.safetynetalertsservice.repository.DataRepository;
 import com.safetynet.alerts.safetynetalertsservice.service.communityEmail.interfaces.CommunityEmailService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +15,7 @@ import java.util.List;
  */
 @Service
 public class CommunityEmailServiceImpl implements CommunityEmailService {
+    private static final Logger logger = LogManager.getLogger(CommunityEmailServiceImpl.class);
     private final DataRepository repository;
 
 
@@ -31,6 +34,7 @@ public class CommunityEmailServiceImpl implements CommunityEmailService {
         List<String> Emails = repository.findAllPersons().stream().
                 filter(p-> city.equals(p.city())).
                 map(Person::email).toList();
+        logger.debug("{} emails found for city={}", Emails.size(), city);
         return new CommunityEmailResponseDTO(Emails);
     }
 }

@@ -6,6 +6,8 @@ import com.safetynet.alerts.safetynetalertsservice.model.MedicalRecord;
 import com.safetynet.alerts.safetynetalertsservice.model.exception.OldMedicalRecordNotFoundException;
 import com.safetynet.alerts.safetynetalertsservice.repository.DataRepository;
 import com.safetynet.alerts.safetynetalertsservice.service.medicalrecord.interfaces.DeleteMedicalRecordCommand;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -15,6 +17,7 @@ import java.util.Set;
 // (name,firstname) are the identifiers
 @Service
 public class DeleteMedicalRecordCommandImpl implements DeleteMedicalRecordCommand {
+    private static final Logger logger = LogManager.getLogger(DeleteMedicalRecordCommandImpl.class);
     private final DataRepository repository;
 
     public DeleteMedicalRecordCommandImpl(DataRepository repository) {
@@ -29,6 +32,7 @@ public class DeleteMedicalRecordCommandImpl implements DeleteMedicalRecordComman
      */
     @Override
     public void execute(MedicalRecord.Id id) {
+        logger.debug("Attempting to delete medical record lastName={} firstName={}", id.lastName(), id.firstName());
         repository.update(oldData -> { //possible optimization (if I have time : theme : key projection)
             Set<MedicalRecord> oldMedicalRecords = new HashSet<>(oldData.medicalRecords());
             boolean removed = oldMedicalRecords.removeIf(medicalRecord ->
@@ -37,6 +41,7 @@ public class DeleteMedicalRecordCommandImpl implements DeleteMedicalRecordComman
             );
 
             if (!removed) {
+                logger.error("Medical record not found: lastName={} firstName={}", id.lastName(), id.firstName());
                 throw new OldMedicalRecordNotFoundException(id.lastName(), id.firstName());
             }
             

@@ -7,6 +7,8 @@ import com.safetynet.alerts.safetynetalertsservice.model.exception.MappingWithSt
 import com.safetynet.alerts.safetynetalertsservice.model.exception.MappingWithStationNotFoundException;
 import com.safetynet.alerts.safetynetalertsservice.repository.DataRepository;
 import com.safetynet.alerts.safetynetalertsservice.service.firestation.interfaces.DeleteFireStationCommand;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 
@@ -17,6 +19,7 @@ import java.util.Set;
 
 @Service
 public class DeleteFireStationCommandImpl implements DeleteFireStationCommand {
+    private static final Logger logger = LogManager.getLogger(DeleteFireStationCommandImpl.class);
     DataRepository dataRepository;
 
     public DeleteFireStationCommandImpl(DataRepository dataRepository) {
@@ -31,10 +34,12 @@ public class DeleteFireStationCommandImpl implements DeleteFireStationCommand {
      */
     @Override
     public void executeByAddress(String address) {
+        logger.debug("Attempting to delete firestation mappings for address={}", address);
         dataRepository.update(oldData -> {
             boolean mappingExist = oldData.fireStations().stream().anyMatch(fs ->
                     fs.address().equals(address));
             if (!mappingExist) {
+                logger.error("No firestation mapping found for address={}", address);
                 throw new MappingWithAddressNotFoundException(address);
             }
             Set<FireStation> fireStations = new LinkedHashSet<>(oldData.fireStations());
@@ -51,10 +56,12 @@ public class DeleteFireStationCommandImpl implements DeleteFireStationCommand {
      */
     @Override
     public void executeByStation(String station) {
+        logger.debug("Attempting to delete firestation mappings for station={}", station);
         dataRepository.update(oldData -> {
             boolean mappingExist = oldData.fireStations().stream().anyMatch(fs ->
                     fs.station().equals(station));
             if (!mappingExist) {
+                logger.error("No firestation mapping found for station={}", station);
                 throw new MappingWithStationNotFoundException((station));
             }
             Set<FireStation> fireStations = new LinkedHashSet<>(oldData.fireStations());
@@ -71,12 +78,14 @@ public class DeleteFireStationCommandImpl implements DeleteFireStationCommand {
      */
     @Override
     public void executeByFireStation(FireStation fireStation) {
+        logger.debug("Attempting to delete firestation mapping address={} station={}", fireStation.address(), fireStation.station());
         dataRepository.update(oldData -> {
             Set<FireStation> fireStations = new LinkedHashSet<>(oldData.fireStations());
 
             if(fireStations.contains(fireStation)){
                 fireStations.remove(fireStation);
             }else {
+                logger.error("No firestation mapping found for address={} station={}", fireStation.address(), fireStation.station());
                 throw new MappingWithStationAndAddressNotFoundException(fireStation.address(), fireStation.station());
             }
             return new DataWrapper(oldData.persons(), List.copyOf(fireStations), oldData.medicalRecords());

@@ -6,6 +6,8 @@ import com.safetynet.alerts.safetynetalertsservice.model.MedicalRecord;
 import com.safetynet.alerts.safetynetalertsservice.repository.DataRepository;
 import com.safetynet.alerts.safetynetalertsservice.service.personInfo.interfaces.PersonInfoService;
 import com.safetynet.alerts.safetynetalertsservice.util.AgeCalculator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class PersonInfoServiceImpl implements PersonInfoService {
+    private static final Logger logger = LogManager.getLogger(PersonInfoServiceImpl.class);
     private final DataRepository repository;
 
     public PersonInfoServiceImpl(DataRepository repository) {
@@ -39,6 +42,7 @@ public class PersonInfoServiceImpl implements PersonInfoService {
                                 ,(existing, replacement) -> existing
 
                         ));
+        logger.debug("{} medical records pre-filtered for lastName={}", PersonMeds.size(), lastName);
 
         List<PersonInfoDTO> value = repository.findAllPersons().stream().
                 filter(p-> lastName.equals(p.lastName()))
@@ -53,6 +57,7 @@ public class PersonInfoServiceImpl implements PersonInfoService {
                             meds.medications(),
                             meds.allergies()
                     );}).toList();
+        logger.debug("{} person-info entries built for lastName={}", value.size(), lastName);
         return new  PersonInfoResponseDTO(value);
     }
 }

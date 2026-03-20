@@ -25,7 +25,9 @@ public class FloodController {
     @GetMapping("/stations")
     public FloodResponseDTO  getHouseHoldsUnderStations(@RequestParam List<String> stations){
         logger.info("Incoming request stations ={}",stations);
-        return service.getHouseHoldsUnderStations(stations);
+        FloodResponseDTO response = service.getHouseHoldsUnderStations(stations);
+        logger.info("Response: {} households found for stations={}", response.households().size(), stations);
+        return response;
     }
 
 }

@@ -6,6 +6,8 @@ import com.safetynet.alerts.safetynetalertsservice.model.*;
 import com.safetynet.alerts.safetynetalertsservice.repository.DataRepository;
 import com.safetynet.alerts.safetynetalertsservice.service.fire.interfaces.FireService;
 import com.safetynet.alerts.safetynetalertsservice.util.AgeCalculator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 @Service
 public class FireServiceImpl implements FireService
 {
+    private static final Logger logger = LogManager.getLogger(FireServiceImpl.class);
     private final DataRepository repository;
 
     public FireServiceImpl(DataRepository repository) {
@@ -46,6 +49,7 @@ public class FireServiceImpl implements FireService
         List<String> fireStationByAddress = repository.findAllFireStations().
                 stream().filter(fS -> address.equals(fS.address()))
                 .map(FireStation::station).toList();
+        logger.debug("{} station(s) found for address={}: {}", fireStationByAddress.size(), address, fireStationByAddress);
 
 
 
@@ -61,7 +65,10 @@ public class FireServiceImpl implements FireService
         for(Person person: repository.findAllPersons()){
             if(person.address().equals(address)){
                 MedicalRecord.MedicalHistory medicalHistory = personMeds.get(new MedicalRecord.Id(person.firstName(), person.lastName()));
-                if(medicalHistory == null){ continue;}
+                if(medicalHistory == null){
+                    logger.debug("Skipping person {} {}: no medical record found", person.firstName(), person.lastName());
+                    continue;
+                }
                 ResidentMedicalDTO newRMD = new ResidentMedicalDTO(
                         person.lastName(),
                         person.phone(),
@@ -72,6 +79,7 @@ public class FireServiceImpl implements FireService
                 residentMedicalDTOS.add(newRMD);
             }
         }
+        logger.debug("{} residents built for address={}", residentMedicalDTOS.size(), address);
         return new  FireResponseDTO(residentMedicalDTOS,fireStationByAddress);
     }
 }

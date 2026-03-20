@@ -5,6 +5,8 @@ import com.safetynet.alerts.safetynetalertsservice.model.FireStation;
 import com.safetynet.alerts.safetynetalertsservice.model.exception.DuplicateFireStationMappingException;
 import com.safetynet.alerts.safetynetalertsservice.repository.DataRepository;
 import com.safetynet.alerts.safetynetalertsservice.service.firestation.interfaces.AddFireStationCommand;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -13,6 +15,7 @@ import java.util.Set;
 
 @Service
 public class AddFireStationCommandImpl implements AddFireStationCommand {
+    private static final Logger logger = LogManager.getLogger(AddFireStationCommandImpl.class);
 
     private final DataRepository repo;
 
@@ -31,6 +34,7 @@ public class AddFireStationCommandImpl implements AddFireStationCommand {
      */
     @Override
     public void execute(FireStation fs) {
+        logger.debug("Attempting to add firestation mapping address={} station={}", fs.address(), fs.station());
         repo.update(oldData -> {
             boolean alreadyExists =
                     oldData.fireStations().stream().
@@ -39,6 +43,7 @@ public class AddFireStationCommandImpl implements AddFireStationCommand {
                                     && existing.station().equals(fs.station()));
             // We could have made it Idempotent, but It would have violated the business logic rule.
             if (alreadyExists) {
+                logger.error("Duplicate firestation mapping: address={} station={} already exists", fs.address(), fs.station());
                 throw new DuplicateFireStationMappingException(fs.address(), fs.station());
             }
 

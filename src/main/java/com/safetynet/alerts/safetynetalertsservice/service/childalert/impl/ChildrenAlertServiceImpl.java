@@ -8,6 +8,8 @@ import com.safetynet.alerts.safetynetalertsservice.model.Person;
 import com.safetynet.alerts.safetynetalertsservice.repository.DataRepository;
 import com.safetynet.alerts.safetynetalertsservice.service.childalert.interfaces.ChildrenAlertService;
 import com.safetynet.alerts.safetynetalertsservice.util.AgeCalculator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ import java.util.List;
  */
 @Service
 public class ChildrenAlertServiceImpl implements ChildrenAlertService {
+    private static final Logger logger = LogManager.getLogger(ChildrenAlertServiceImpl.class);
     private final DataRepository repository;
 
     public ChildrenAlertServiceImpl(DataRepository repository) {
@@ -47,6 +50,7 @@ public class ChildrenAlertServiceImpl implements ChildrenAlertService {
                                 .anyMatch(mR -> p.firstName().equals(mR.firstName()) &&
                                         p.lastName().equals(mR.lastName())))
                 .toList();
+        logger.debug("{} persons with medical records found at address={}", personsAtAddress.size(), address);
         List<ChildDTO> children = new ArrayList<>();
 
         for (Person p : personsAtAddress) {
@@ -61,6 +65,7 @@ public class ChildrenAlertServiceImpl implements ChildrenAlertService {
                     });
         }
 
+        logger.debug("{} children identified at address={}", children.size(), address);
         if (children.isEmpty()){
             return new ChildrenAlertResponseDTO(List.of());
         }
@@ -79,6 +84,7 @@ public class ChildrenAlertServiceImpl implements ChildrenAlertService {
                     houseHoldMembers.add(houseHoldMemberDTO);
                 }
             }
+            logger.debug("Child {} {}: {} household members found", child.firstName(), child.lastName(), houseHoldMembers.size());
             childWithHouseHoldMembers.add(new ChildWithHouseHoldMembersDTO(child.firstName(),child.lastName(),child.age(), houseHoldMembers));
         }
         return new ChildrenAlertResponseDTO(childWithHouseHoldMembers);
