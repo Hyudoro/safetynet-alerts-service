@@ -19,7 +19,7 @@ import java.util.function.UnaryOperator;
 /**
  * File-backed JSON repository that serves as the single source of truth for all domain data.
  *
- * <p>Thread safety: {@code currentData} is declared {@code volatile} so every thread always
+ * Thread safety: {@code currentData} is declared {@code volatile} so every thread always
  * reads the latest reference after an update. Writes are further guarded by {@code synchronized}
  * on {@link #update} to prevent lost updates under concurrent requests.
  * Bootstrap logic: if the configured external file already exists it is loaded directly;
